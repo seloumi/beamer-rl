@@ -1,0 +1,240 @@
+\documentclass{beamer}
+\usepackage{hologo} % pdflatex, xelatex, lualatex logos 
+
+% babel package  should be added explicitelly 
+\usepackage[nil,bidi=basic-r,layout=counters.lists.tabular]{babel}
+\usepackage{beamer-rl}
+\babelprovide[import=ar-DZ, main]{arabic}
+\babelfont{sf}{Amiri}
+
+% Themes without Navigation Bars
+%\mode<presentation>{\usetheme{default}}
+%\mode<presentation>{\usetheme{boxes}}
+%\mode<presentation>{\usetheme{Bergen}}
+%\mode<presentation>{\usetheme{Boadilla}}
+\mode<presentation>{\usetheme{Madrid}}
+%\mode<presentation>{\usetheme{AnnArbor}}
+%\mode<presentation>{\usetheme{CambridgeUS}}
+%\mode<presentation>{\usetheme{EastLansing}}
+%\mode<presentation>{\usetheme{Pittsburgh}}
+%\mode<presentation>{\usetheme{Rochester}}
+
+% Themes with a Tree-Like Navigation Bar
+%\mode<presentation>{\usetheme{Antibes}}
+%\mode<presentation>{\usetheme{JuanLesPins}}
+%\mode<presentation>{\usetheme{Montpellier}}
+
+% Themes with a Table of Contents Sidebar
+%\mode<presentation>{\usetheme{Berkeley}}
+%\mode<presentation>{\usetheme{PaloAlto}}
+%\mode<presentation>{\usetheme{Goettingen}}
+%\mode<presentation>{\usetheme{Hannover}}
+
+% Themes with a Mini Frame Navigation
+%\mode<presentation>{\usetheme{Berlin}}
+%\mode<presentation>{\usetheme{Ilmenau}}
+%\mode<presentation>{\usetheme{Dresden}}
+%\mode<presentation>{\usetheme{Darmstadt}}
+%\mode<presentation>{\usetheme{Frankfurt}}
+%\mode<presentation>{\usetheme{Singapore}}
+%\mode<presentation>{\usetheme{Szeged}}
+
+% Themes with Section and Subsection Tables
+%\mode<presentation>{\usetheme{Copenhagen}}
+%\mode<presentation>{\usetheme{Luebeck}}
+%\mode<presentation>{\usetheme{Malmoe}}
+%\mode<presentation>{\usetheme{Warsaw}}
+
+\title{حزمة beamer-rl}
+
+\author{Salim Bou}
+
+\institute[]{%
+{\color{blue} Repository: } https://github.com/seloumi/beamer-rl \par 
+{\color{blue} Bug tracker: } https://github.com/seloumi/beamer-rl/issues
+}
+
+
+\date{\today}
+
+\setbeamercovered{transparent=10}
+\newtheorem*{thm}{نظرية.}
+
+\def\cs#1{\babelsublr{\texttt{\textbackslash#1}}}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{\contentsname}
+\tableofcontents
+\end{frame}
+
+\section{مدخل}
+
+\begin{frame}[fragile]
+\frametitle{مدخل}
+انشاء عرض بيمر عربي (اتجاه النص من اليمين لليسار) اعتمادا على 
+ \hologo{pdfLaTeX} أو \hologo{XeLaTeX} مازال يعترضه الكثير من المشاكل والمعوقات خاصة ما يتعلق بالألوان والروابط والتي لم يوجد لها حلول بعد. 
+
+فريق  \hologo{LuaTeX} 
+أوجد حلولا لهذه المشاكل، الشكر لهم ولـ 
+\textit{Javier Bezos}
+لأعماله بالحزمة
+\verb|babel| وخصوصا الكتابة بالاتجاهين (\verb|bidi| writing)    
+
+
+\end{frame}
+
+\section{كيفية استعمال الحزمة}
+
+\begin{frame}[fragile]
+\frametitle{كيفية استعمال الحزمة}
+
+\selectlanguage{nil}
+
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage[nil,bidi=basic-r,layout=counters.lists]{babel}
+\usepackage{beamer-rl}
+\babelprovide[import=ar-DZ, main]{arabic}
+\babelfont{sf}{Amiri}
+
+
+\mode<presentation>{\usetheme{Warsaw}}
+\begin{document}
+...
+\end{document}
+
+\end{verbatim}
+
+\end{frame}
+
+\section{أمثلة}
+\subsection{الإطارات}
+
+\begin{frame}[fragile]
+\frametitle{الإطارات}
+
+{\selectlanguage{nil}
+\verb:\setbeamertemplate{blocks}[default]:
+}
+
+\setbeamertemplate{blocks}[default]
+
+
+\begin{block}{Lorem}
+  \selectlanguage{nil} 
+  On 21 April 1820, during a lecture, Ørsted
+  noticed a compass needle deflected from magnetic north when an
+  electric current from a battery was switched on and off.
+\end{block}
+
+{\selectlanguage{nil}
+\verb:\setbeamertemplate{blocks}[rounded][shadow=true]:
+}
+
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+\begin{block}{أورستد}
+  لاحظ هانز أورستد في 21 أبريل 1820 وهو يُعد أحد التجارب أن إبرة
+  البوصلة تنحرف عن اتجاهها نحو الشمال عندما كان يغلق ويفتح التيار في
+  دائرة كهربائية يُعدها.
+\end{block}
+
+\end{frame}
+
+\subsection{القوائم}
+
+\begin{frame}
+\frametitle{enumerate, itemize}
+
+\begin{enumerate}
+\item فيزياء تطبيقية
+\item فيزياء تجريبية
+\item فيزياء نظرية
+\end{enumerate}
+
+
+\begin{itemize}
+\item فيزياء تطبيقية
+\item فيزياء تجريبية
+\item فيزياء نظرية
+\end{itemize}
+\end{frame}
+
+\subsection{الروابط}
+
+\begin{frame}
+\frametitle{الروابط}
+\begin{itemize}
+\item<1-> العنصر الأول.
+\item<2-> العنصر الثاني.
+\item<3-> العنصر الثالث.
+\end{itemize}
+\hyperlink{jumptosecond}{\beamergotobutton{الرجوع إلى الشريحة الثانية}}
+\hypertarget<2>{jumptosecond}{}
+\end{frame}
+
+
+\subsection{النظريات}
+
+\begin{frame}
+\frametitle{النظريات}
+
+\framesubtitle{The proof uses \textit{reductio ad absurdum}.}
+\begin{thm}
+There is no largest prime number.
+\end{thm}
+\begin{proof}
+\begin{enumerate}[<+-| alert@+>]
+\item Suppose $p$ were the largest prime number.
+\item Let $q$ be the product of the first $p$ numbers.
+\item Then $q+1$ is not divisible by any of them.
+\item But $q + 1$ is greater than $1$, thus divisible by some prime
+number not in the first $p$ numbers.\qedhere
+\end{enumerate}
+\end{proof}
+
+\end{frame}
+
+\subsection{التكبير}
+
+\begin{frame}[fragile]
+\frametitle{التكبير}
+
+\framezoom<1><2>[border=2](2cm,2cm)(2cm,2cm)
+\pgfimage[height=5cm]{example-image}
+
+\selectlanguage{nil}
+
+\begin{verbatim}
+\framezoom<1><2>[border=2](2cm,2cm)(2cm,2cm)
+\pgfimage[height=5cm]{example-image}
+\end{verbatim}
+\end{frame}
+
+\section{بعض الملاحظات}
+
+\begin{frame}[fragile]
+\frametitle{بعض الملاحظات}
+
+\begin{itemize}
+\item
+الحزمة 
+ \verb:beamer-rl: تقوم بتبادل لكل من التعليمتين  \cs{blacktriangleright} و   \cs{blacktriangleleft} في حالة نص من اليمين لليسار
+\item
+في بعض الحالات يمكن استعمال التعليمة 
+ \cs{babelsublr} التي توفرها الحزمة  \verb:bebel: 
+لادراج نص من اليسار لليمين (لاتيني) في وسط نص من اليمين لليسار،
+ على سبيل المثال  في حال اردنا ادراج رسم  
+ \verb:pspicture: ضمن نص من اليمين لليسار. 
+\end{itemize}
+
+\end{frame}
+
+
+\end{document}

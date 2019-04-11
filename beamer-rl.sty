@@ -2,8 +2,6 @@
 \ProvidesPackage{beamer-rl}
 [2019/03/28 v1.1 LaTeX package to patch beamer for right to left presentation]
 
-\RequirePackage[nil,bidi=basic-r,layout=counters.lists]{babel}
-
 \def\reset@temp#1#2{\expandafter\let\csname beamer@@tmpop@#1@#2\endcsname\relax}
 \def\@@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate{#1}{#2}}
 \def\@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate*{#1}{#2}}
