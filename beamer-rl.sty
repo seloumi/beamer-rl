@@ -356,7 +356,6 @@
 % Zoom stuff
 %
 
-\def\framezoom<#1><#2>{\@ifnextchar[{\beamer@framezoom<#1><#2>}{\beamer@framezoom<#1><#2>[]}}
 \def\beamer@framezoom<#1><#2>[#3](#4,#5)(#6,#7){%
 	\par\nointerlineskip%
 	\global\beamer@slidehaszoomtrue%
@@ -378,6 +377,7 @@
 		\global\setbox\beamer@zoombox=\vbox to0pt{\unvbox\beamer@zoombox\box\@tempboxa}%
 	}%
 	\only<#2>{%
+		\pardir TLT% 
 		\@ifundefined{\beamer@labelzoomed}%
 		{%
 			\hypertarget{\beamer@labelzoomed}{}%
@@ -421,14 +421,10 @@
 			\dp\@tempboxa=0pt%
 			\setbox\beamer@framebox=\vbox to\beamer@frametextheight{{%
 					\ifbeamer@plainframe\beamer@leftmargin=\Gm@lmargin\fi%
-					\newdimen\@@tempdimb
-			                \ifcase\bbl@thepardir \@@tempdimb=0pt\else\@@tempdimb=\@tempdimb\fi 
-					\let\pgfpicture\oldpgfpicture
-					\let\endpgfpicture\oldendpgfpicture
-					\textdir TLT
+					\pardir TLT% 
 					\begin{pgfpicture}{\beamer@leftmargin}{-\beamer@frametextheight}{\beamer@leftmargin}{0pt}
 						\pgftext[left,top]{\box\@tempboxa}
-						\pgfpathrectangle{\pgfpoint{-\@@tempdimb}{-\@tempdimc}}{\pgfpoint{\@tempdimb}{\@tempdimc}}%
+						\pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\@tempdimb}{\@tempdimc}}%
 						\pgfusepath{clip}
 						\begingroup
 						\pgftransformscale{\beamer@temp}
@@ -441,7 +437,7 @@
 			}}%
 			
 			\setbox\beamer@framebox=\vbox{%
-				\nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
+	            \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
 				\nointerlineskip\unvbox\beamer@frametitlebox%
 				\nobreak%
 				\box\beamer@framebox %
