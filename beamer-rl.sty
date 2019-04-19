@@ -243,7 +243,7 @@
 %% beamerbaseauxtemplates
 
 
-% (sub-)section in toc: ball
+% (sub-)section in toc: subsections numbered
 
 \redefbeamertemplate{subsection in toc}{subsections numbered}
 {\leavevmode\leftskip=2em\rlap{\hskip-2em \inserttocsectionnumber\hbox{.}\inserttocsubsectionnumber}\inserttocsubsection\par}
@@ -299,12 +299,24 @@
 	\kern4pt%
 }
 
-
 %% beamerbasenavigation
 
 % User Buttons
 
 \pgfdefobject{beamergotosymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{5pt}{5pt}}
+{
+	\pgfpathqmoveto{1.5bp}{0.5bp}
+	\pgfpathqlineto{3.5bp}{2bp}
+	\pgfpathqlineto{1.5bp}{3.5bp}
+	\pgfusepathqfill
+}
+
+\def\insertgotosymbol{%
+	\begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+		\pgfuseobject{\ifcase\bbl@thepardir beamergotosymbol\else beamerreturnsymbol\fi}%
+\end{pgfpicture}}
+
+\pgfdefobject{beamerreturnsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{5pt}{5pt}}
 {
 	\pgfpathqmoveto{3.5bp}{0.5bp}
 	\pgfpathqlineto{1.5bp}{2bp}
@@ -312,13 +324,13 @@
 	\pgfusepathqfill
 }
 
-
-\def\insertgotosymbol{%
-	\begin{pgfpicture}{-1pt}{0pt}{4pt}{5pt}
-		\pgfuseobject{beamergotosymbol}%
+\def\insertreturnsymbol{%
+	\begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+		\pgfuseobject{\ifcase\bbl@thepardir beamerreturnsymbol\else beamergotosymbol\fi}%
 \end{pgfpicture}}
 
-\pgfdefobject{beamerskipsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{7pt}{5pt}}
+
+\pgfdefobject{beamerskipsymbolrl}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{7pt}{5pt}}
 {
 	\pgfpathqmoveto{3.5bp}{0.5bp}
 	\pgfpathqlineto{1.5bp}{2bp}
@@ -329,28 +341,27 @@
 	\pgfusepathqfill
 }
 
-\def\insertskipsymbol{%
-	\begin{pgfpicture}{-1pt}{0pt}{8pt}{5pt}
-		\pgfuseobject{beamerskipsymbol}%
-\end{pgfpicture}}
-
-
-\pgfdefobject{beamerreturnsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{5pt}{5pt}}
+\pgfdefobject{beamerskipsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{7pt}{5pt}}
 {
 	\pgfpathqmoveto{1.5bp}{0.5bp}
 	\pgfpathqlineto{3.5bp}{2bp}
 	\pgfpathqlineto{1.5bp}{3.5bp}
+	\pgfpathqmoveto{3.5bp}{0.5bp}
+	\pgfpathqlineto{5.5bp}{2bp}
+	\pgfpathqlineto{3.5bp}{3.5bp}
 	\pgfusepathqfill
 }
 
-\def\insertreturnsymbol{%
-	\begin{pgfpicture}{-1pt}{0pt}{6pt}{5pt}
-		\pgfuseobject{beamerreturnsymbol}%
+\def\insertskipsymbol{%
+	\begin{pgfpicture}{-1pt}{0pt}{8pt}{5pt}
+		\pgfuseobject{\ifcase\bbl@thepardir beamerskipsymbol\else beamerskipsymbolrl\fi}%
 \end{pgfpicture}}
 
+\def\beamergotobutton#1{\beamerbutton{\insertgotosymbol\ #1}}
+\def\beamerreturnbutton#1{\beamerbutton{\insertreturnsymbol\ #1}}
+\def\beamerskipbutton#1{\beamerbutton{\insertskipsymbol\ #1}}
 
 %% beamerbaseframesize
-
 
 %
 % Zoom stuff
