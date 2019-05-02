@@ -45,7 +45,6 @@
 
 \usecolortheme{spruce}
 
-
 \title{حزمة beamer-rl}
 
 \author{Salim Bou}
@@ -63,6 +62,8 @@
 \def\cs#1{\babelsublr{\texttt{\textbackslash#1}}}
 
 \begin{document}
+
+\parskip=6pt
 
 \begin{frame}
 \titlepage
@@ -86,9 +87,9 @@
 لأعماله بالحزمة
 \verb|babel| وخصوصا الكتابة بالاتجاهين (\verb|bidi| writing)    
 
-الحزمة تعتمد على 
-\verb|babel| مع الخيار 
-\verb|bidi=basic-r| والمعالجة تتطلب استخدام 
+هذه الحزمة تعدل في بعض اوامر وتعليمات beamer لغرض انشاء عروض من اليمين إلى اليسار (العربية على سبيل المثال)، الحزمة تستدعي \verb|babel| مع الخيار 
+\verb|bidi=basic-r|
+ والمعالجة تتطلب استخدام 
 \hologo{LuaLaTeX} 
 
 \end{frame}
