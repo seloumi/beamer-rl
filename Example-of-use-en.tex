@@ -1,8 +1,6 @@
 \documentclass{beamer}
 \usepackage{hologo} % pdflatex, xelatex, lualatex logos 
 
-% babel package  should be added explicitelly 
-\usepackage[nil,bidi=basic-r,layout=counters.lists.tabular]{babel}
 \usepackage{beamer-rl}
 \babelprovide[import=ar-DZ, main]{arabic}
 \babelprovide[import,language=Default]{english}
@@ -59,7 +57,7 @@
 \date{{\selectlanguage{english} \today}}
 
 \setbeamercovered{transparent=10}
-\newtheorem*{thm}{نظرية.}
+\newtheorem*{prf}{Proof}
 
 
 \begin{document}
@@ -79,7 +77,7 @@
 \frametitle{Introduction}
 Creating beamer presentation for  right to left language  (like arabic) using \hologo{pdfLaTeX} or \hologo{XeLaTeX} still poses many problems due to bugs not currently resolved especially for colors and hyperlinks
 
-The \hologo{LuaTeX} team set solutions for  these issues thanks to them and to \textit{Javier Bezos} for  his works on the package \verb|babel| and \verb|bidi| writing    
+The \hologo{LuaTeX} team set solutions for  these issues thanks to them and to \textit{Javier~Bezos} for  his works on the package \verb|babel| and \verb|bidi| writing    
 
 
 \end{frame}
@@ -93,11 +91,9 @@ The \hologo{LuaTeX} team set solutions for  these issues thanks to them and to \
 
 \begin{verbatim}
 \documentclass{beamer}
-\usepackage[nil,bidi=basic-r,layout=counters.lists]{babel}
 \usepackage{beamer-rl}
 \babelprovide[import=ar-DZ, main]{arabic}
 \babelfont{sf}{Amiri}
-
 
 \mode<presentation>{\usetheme{Warsaw}}
 \begin{document}
@@ -134,43 +130,60 @@ The \hologo{LuaTeX} team set solutions for  these issues thanks to them and to \
 
 \setbeamertemplate{blocks}[rounded][shadow=true]
 
-\begin{block}{أورستد}
-  لاحظ هانز أورستد في 21 أبريل 1820 وهو يُعد أحد التجارب أن إبرة
-  البوصلة تنحرف عن اتجاهها نحو الشمال عندما كان يغلق ويفتح التيار في
-  دائرة كهربائية يُعدها.
+\begin{block}{Lorem}
+  \selectlanguage{nil} 
+  On 21 April 1820, during a lecture, Ørsted
+  noticed a compass needle deflected from magnetic north when an
+  electric current from a battery was switched on and off.
 \end{block}
 
 \end{frame}
 
-\subsection{enumerate, itemize}
+\subsection{Lists}
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{enumerate, itemize}
 
 \begin{enumerate}
-\item فيزياء تطبيقية
-\item فيزياء تجريبية
-\item فيزياء نظرية
+\item first item
+\item second item
+\item third item
 \end{enumerate}
+
+\setbeamertemplate{itemize item}[triangle]
+
+{\selectlanguage{nil}
+\verb|\setbeamertemplate{itemize item}[triangle]|
+}
 
 
 \begin{itemize}
-\item فيزياء تطبيقية
-\item فيزياء تجريبية
-\item فيزياء نظرية
+\item first item
+\item second item
+\item third item
 \end{itemize}
+
+\selectlanguage{nil}
+
+\begin{itemize}
+\item first item
+\item second item
+\item third item
+\end{itemize}
+
+
 \end{frame}
 
-\subsection{hyperlinks}
+\subsection{Hyperlinks}
 
 \begin{frame}
-\frametitle{hyperlinks}
+\frametitle{Hyperlinks}
 \begin{itemize}
 \item<1-> First item.
 \item<2-> Second item.
 \item<3-> Third item.
 \end{itemize}
-\hyperlink{jumptosecond}{\beamergotobutton{الرجوع إلى الشريحة الثانية}}
+\hyperlink{jumptosecond}{\beamergotobutton{return to second slide}}
 \hypertarget<2>{jumptosecond}{}
 \end{frame}
 
@@ -181,10 +194,10 @@ The \hologo{LuaTeX} team set solutions for  these issues thanks to them and to \
 \frametitle{Theorems}
 
 \framesubtitle{The proof uses \textit{reductio ad absurdum}.}
-\begin{thm}
+\begin{theorem}
 There is no largest prime number.
-\end{thm}
-\begin{proof}
+\end{theorem}
+\begin{prf}
 \begin{enumerate}[<+-| alert@+>]
 \item Suppose $p$ were the largest prime number.
 \item Let $q$ be the product of the first $p$ numbers.
@@ -192,14 +205,14 @@ There is no largest prime number.
 \item But $q + 1$ is greater than $1$, thus divisible by some prime
 number not in the first $p$ numbers.\qedhere
 \end{enumerate}
-\end{proof}
+\end{prf}
 
 \end{frame}
 
-\subsection{zooming}
+\subsection{Zooming}
 
 \begin{frame}[fragile]
-\frametitle{zooming}
+\frametitle{Zooming}
 
 \framezoom<1><2>[border=2](2cm,2cm)(2cm,2cm)
 \pgfimage[height=5cm]{example-image}
@@ -220,12 +233,30 @@ number not in the first $p$ numbers.\qedhere
 \begin{itemize}
 \item
 The \verb:beamer-rl: package swap the definition of \verb:\blacktriangleright: with  \verb:\blacktriangleleft: in RTL context.
+
+\bigskip
+
+{\selectlanguage{nil}
+\centering
+\begin{tabular}{c|cc}
+\hline
+ &  \verb:\blacktriangleright: & \verb:\blacktriangleleft:   \\
+\hline 
+LTR context & \blacktriangleright & \blacktriangleleft \\
+\hline
+RTL context & {\selectlanguage{arabic}\blacktriangleright} & {\selectlanguage{arabic}\blacktriangleleft} \\
+\hline
+\end{tabular}
+\par
+}
+
+\bigskip
+
 \item
 In some cases you  need to use \verb:\babelsublr: command from \verb:bebel: 
 package to insert a left to right text within your right to left text, e.g if you need to insert a \verb:pspicture: drawing in RTL context 
 \end{itemize}
 
 \end{frame}
-
 
 \end{document}

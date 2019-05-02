@@ -2,6 +2,8 @@
 \ProvidesPackage{beamer-rl}
 [2019/03/28 v1.1 LaTeX package to patch beamer for right to left presentation]
 
+\RequirePackage[nil,bidi=basic-r,layout=counters.lists.tabular]{babel}
+
 \def\reset@temp#1#2{\expandafter\let\csname beamer@@tmpop@#1@#2\endcsname\relax}
 \def\@@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate{#1}{#2}}
 \def\@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate*{#1}{#2}}
@@ -29,6 +31,7 @@
 \def\pgfuseshading#1{\babelsublr{\oldpgfuseshading{#1}}}
 
 \hypersetup{unicode}
+
 
 %% beamerbasebox 
 
@@ -353,7 +356,7 @@
 }
 
 \def\insertskipsymbol{%
-	\begin{pgfpicture}{-1pt}{0pt}{8pt}{5pt}
+	\begin{pgfpicture}{-1pt}{0pt}{6pt}{5pt}
 		\pgfuseobject{\ifcase\bbl@thepardir beamerskipsymbol\else beamerskipsymbolrl\fi}%
 \end{pgfpicture}}
 
