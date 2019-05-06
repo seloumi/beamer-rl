@@ -464,4 +464,17 @@ f\NeedsTeXFormat{LaTeX2e}
 	}%
 }
 
+% define an RTL progress bar in section page for metropolis theme 
+
+\defbeamertemplate{progress bar in section page}{RTL}{%
+	\let\@arabic=\bbl@latinarabic  
+	\setlength{\metropolis@progressonsectionpage}{%
+		\textwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
+	}%
+	\begin{tikzpicture}
+	\fill[bg] (0,0) rectangle (\textwidth, \metropolis@progressonsectionpage@linewidth);
+	\fill[fg] (\textwidth,0) rectangle (\textwidth-\metropolis@progressonsectionpage, \metropolis@progressonsectionpage@linewidth);
+	\end{tikzpicture}%
+}	
+
 \endinput
