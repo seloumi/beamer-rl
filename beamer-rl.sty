@@ -1,8 +1,11 @@
-f\NeedsTeXFormat{LaTeX2e}
+\NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamer-rl}
 [2019/04/03 v1.2 LaTeX package to patch beamer for right to left presentation]
 
-\RequirePackage[nil,bidi=basic-r,layout=counters.lists.tabular]{babel}
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{babel}}
+\ProcessOptions*\relax
+
+\RequirePackage[nil,bidi=basic-r]{babel}
 
 \def\reset@temp#1#2{\expandafter\let\csname beamer@@tmpop@#1@#2\endcsname\relax}
 \def\@@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate{#1}{#2}}
@@ -451,7 +454,7 @@ f\NeedsTeXFormat{LaTeX2e}
 			}}%
 			
 			\setbox\beamer@framebox=\vbox{%
-	            \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
+				\nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
 				\nointerlineskip\unvbox\beamer@frametitlebox%
 				\nobreak%
 				\box\beamer@framebox %
@@ -464,10 +467,9 @@ f\NeedsTeXFormat{LaTeX2e}
 	}%
 }
 
-% define an RTL progress bar in section page for metropolis theme 
+% define an RTL progress bar  for metropolis theme 
 
 \defbeamertemplate{progress bar in section page}{RTL}{%
-	\let\@arabic=\bbl@latinarabic  
 	\setlength{\metropolis@progressonsectionpage}{%
 		\textwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
 	}%
@@ -476,5 +478,18 @@ f\NeedsTeXFormat{LaTeX2e}
 	\fill[fg] (\textwidth,0) rectangle (\textwidth-\metropolis@progressonsectionpage, \metropolis@progressonsectionpage@linewidth);
 	\end{tikzpicture}%
 }	
+
+\defbeamertemplate{progress bar in head/foot}{RTL}{
+	\nointerlineskip
+	\setlength{\metropolis@progressinheadfoot}{%
+		\paperwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
+	}%
+	\begin{beamercolorbox}[wd=\paperwidth]{progress bar in head/foot}
+		\begin{tikzpicture}
+		\fill[bg] (0,0) rectangle (\paperwidth, \metropolis@progressinheadfoot@linewidth);
+		\fill[fg] (\paperwidth,0) rectangle (\paperwidth-\metropolis@progressinheadfoot, \metropolis@progressinheadfoot@linewidth);
+		\end{tikzpicture}%
+	\end{beamercolorbox}
+}
 
 \endinput
