@@ -467,29 +467,4 @@
 	}%
 }
 
-% define an RTL progress bar  for metropolis theme 
-
-\defbeamertemplate{progress bar in section page}{RTL}{%
-	\setlength{\metropolis@progressonsectionpage}{%
-		\textwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
-	}%
-	\begin{tikzpicture}
-	\fill[bg] (0,0) rectangle (\textwidth, \metropolis@progressonsectionpage@linewidth);
-	\fill[fg] (\textwidth,0) rectangle (\textwidth-\metropolis@progressonsectionpage, \metropolis@progressonsectionpage@linewidth);
-	\end{tikzpicture}%
-}	
-
-\defbeamertemplate{progress bar in head/foot}{RTL}{
-	\nointerlineskip
-	\setlength{\metropolis@progressinheadfoot}{%
-		\paperwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
-	}%
-	\begin{beamercolorbox}[wd=\paperwidth]{progress bar in head/foot}
-		\begin{tikzpicture}
-		\fill[bg] (0,0) rectangle (\paperwidth, \metropolis@progressinheadfoot@linewidth);
-		\fill[fg] (\paperwidth,0) rectangle (\paperwidth-\metropolis@progressinheadfoot, \metropolis@progressinheadfoot@linewidth);
-		\end{tikzpicture}%
-	\end{beamercolorbox}
-}
-
 \endinput
