@@ -5,6 +5,13 @@
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{babel}}
 \ProcessOptions*\relax
 
+\RequirePackage{ifluatex}
+
+\ifluatex
+\else
+\PackageError{beamer-rl}{beamer-rl require luatex}
+\fi
+
 \RequirePackage[nil,bidi=basic-r]{babel}
 
 \def\reset@temp#1#2{\expandafter\let\csname beamer@@tmpop@#1@#2\endcsname\relax}
@@ -81,10 +88,9 @@
 	\bmb@temp=\bmb@width%
 	\bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
 	\bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
+	\bmb@dimc=0pt%
 	\ifdim\wd\bmb@box=0pt
 	\bmb@dimc=\bmb@width%
-	\else
-	\bmb@dimc=0pt%
 	\fi
 	\hbox{%
 		\textdir TLT\begin{pgfpicture}{0bp}{+-\ht\bmb@box}{\bmb@dimc}{+-\ht\bmb@box}
