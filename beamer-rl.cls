@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{beamer-rl}
-[2019/04/03 v1.2 LaTeX class to patch beamer for right to left presentation]
+[2019/04/03 v1.2 LaTeX class to patch beamer for right to left presentation with babel]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
 \ProcessOptions*\relax

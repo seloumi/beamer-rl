@@ -1,7 +1,6 @@
-\documentclass{beamer}
+\documentclass{beamer-rl}
 \usepackage{hologo} % pdflatex, xelatex, lualatex logos 
 
-\usepackage{beamer-rl}
 \babelprovide[import=ar-DZ, main]{arabic}
 \babelprovide[import,language=Default]{english}
 \babelfont{sf}{Amiri}
@@ -43,8 +42,9 @@
 %\mode<presentation>{\usetheme{Luebeck}}
 %\mode<presentation>{\usetheme{Malmoe}}
 %\mode<presentation>{\usetheme{Warsaw}}
+%\usetheme{Cuerna}\usecolortheme{default}
 
-\title{The beamer-rl package}
+\title{The beamer-rl class}
 
 \author{Salim Bou}
 
@@ -68,10 +68,13 @@
 \titlepage
 \end{frame}
 
+\selectlanguage{english}
+\pagedir TLT
 \begin{frame}
 \frametitle{\selectlanguage{english}\contentsname}
 \tableofcontents
 \end{frame}
+
 
 \section{Introduction}
 
@@ -81,7 +84,7 @@ Creating beamer presentation for  right to left language  (like arabic) using \h
 
 The \hologo{LuaTeX} team set solutions for  these issues thanks to them and to \textit{Javier~Bezos} for  his works on the package \verb|babel| and \verb|bidi| writing    
 
-This package provides patchs of some beamer templates and commands 
+This class provides patchs of some beamer templates and commands 
 for right to left presentation, this package call babel with \verb|bidi=basic-r| option and require lualatex engine
 
 \end{frame}
@@ -94,8 +97,7 @@ for right to left presentation, this package call babel with \verb|bidi=basic-r|
 \selectlanguage{nil}
 
 \begin{verbatim}
-\documentclass{beamer}
-\usepackage{beamer-rl}
+\documentclass{beamer-rl}
 \babelprovide[import=ar-DZ, main]{arabic}
 \babelfont{sf}{Amiri}
 
