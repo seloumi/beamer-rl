@@ -1,9 +1,26 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{beamer-rl}
-[2019/04/03 v1.2 LaTeX class to patch beamer for right to left presentation with babel]
+[2019/10/04 v1.3 LaTeX class to patch beamer for right to left presentation with babel]
 
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
-\ProcessOptions*\relax
+\RequirePackage{kvoptions}
+\RequirePackage{kvsetkeys}
+
+\SetupKeyvalOptions{
+	family=beamer-rl,
+	prefix=beamer-rl@,
+	setkeys=\kvsetkeys,
+}
+
+% babel options:
+\define@key{beamer-rl}{babel}{%
+	\PassOptionsToPackage{#1}{babel}%
+}
+
+\DeclareDefaultOption{%
+	\PassOptionsToClass{\CurrentOption}{beamer}%
+}
+
+\ProcessKeyvalOptions*\relax
 
 \RequirePackage{ifluatex}
 
