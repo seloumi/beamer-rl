@@ -1,9 +1,16 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamer-rl}
-[2019/04/03 v1.2 LaTeX package to patch beamer for right to left presentation]
+[2019/09/27 v1.3 LaTeX package which use babel to patch beamer for right to left presentation]
 
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{babel}}
 \ProcessOptions*\relax
+
+\RequirePackage{ifluatex}
+
+\ifluatex
+\else
+\PackageError{beamer-rl}{beamer-rl require luatex}
+\fi
 
 \RequirePackage[nil,bidi=basic-r]{babel}
 
@@ -81,10 +88,9 @@
 	\bmb@temp=\bmb@width%
 	\bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
 	\bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
+	\bmb@dimc=0pt%
 	\ifdim\wd\bmb@box=0pt
 	\bmb@dimc=\bmb@width%
-	\else
-	\bmb@dimc=0pt%
 	\fi
 	\hbox{%
 		\textdir TLT\begin{pgfpicture}{0bp}{+-\ht\bmb@box}{\bmb@dimc}{+-\ht\bmb@box}
@@ -465,31 +471,6 @@
 			\global\setbox\beamer@footins=\box\voidb@x% no footnotes in zoomed slides
 		}%
 	}%
-}
-
-% define an RTL progress bar  for metropolis theme 
-
-\defbeamertemplate{progress bar in section page}{RTL}{%
-	\setlength{\metropolis@progressonsectionpage}{%
-		\textwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
-	}%
-	\begin{tikzpicture}
-	\fill[bg] (0,0) rectangle (\textwidth, \metropolis@progressonsectionpage@linewidth);
-	\fill[fg] (\textwidth,0) rectangle (\textwidth-\metropolis@progressonsectionpage, \metropolis@progressonsectionpage@linewidth);
-	\end{tikzpicture}%
-}	
-
-\defbeamertemplate{progress bar in head/foot}{RTL}{
-	\nointerlineskip
-	\setlength{\metropolis@progressinheadfoot}{%
-		\paperwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
-	}%
-	\begin{beamercolorbox}[wd=\paperwidth]{progress bar in head/foot}
-		\begin{tikzpicture}
-		\fill[bg] (0,0) rectangle (\paperwidth, \metropolis@progressinheadfoot@linewidth);
-		\fill[fg] (\paperwidth,0) rectangle (\paperwidth-\metropolis@progressinheadfoot, \metropolis@progressinheadfoot@linewidth);
-		\end{tikzpicture}%
-	\end{beamercolorbox}
 }
 
 \endinput
