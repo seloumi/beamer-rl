@@ -16,6 +16,12 @@
 	\PassOptionsToPackage{#1}{babel}%
 }
 
+\DeclareVoidOption{arabic}{%
+             \@expandtwoargs\@removeelement\CurrentOption\@classoptionslist\@classoptionslist % remove arabic option from global list  
+   %         \PassOptionsToPackage{arabic}{translator}%
+              \AtBeginDocument{\uselanguage{Arabic}\languagealias{arabic}{Arabic}}
+}
+
 \DeclareDefaultOption{%
 	\PassOptionsToClass{\CurrentOption}{beamer}%
 }

@@ -1,4 +1,4 @@
-\documentclass[babel={layout=lists}]{beamer-rl}
+\documentclass[arabic,babel={layout=lists}]{beamer-rl}
 \usepackage{hologo} % pdflatex, xelatex, lualatex logos 
 
 \babelprovide[import=ar-DZ, main]{arabic}
@@ -57,8 +57,6 @@
 \date{{\selectlanguage{english} \today}}
 
 \setbeamercovered{transparent=10}
-\newtheorem*{prf}{Proof}
-
 
 \begin{document}
 
@@ -168,6 +166,7 @@ for right to left presentation, this package call babel with \verb|bidi=basic-r|
 \end{itemize}
 
 \selectlanguage{nil}
+\shapemode=2
 
 \begin{itemize}
 \item first item
@@ -201,7 +200,7 @@ for right to left presentation, this package call babel with \verb|bidi=basic-r|
 \begin{theorem}
 There is no largest prime number.
 \end{theorem}
-\begin{prf}
+\begin{proof}
 \begin{enumerate}[<+-| alert@+>]
 \item Suppose $p$ were the largest prime number.
 \item Let $q$ be the product of the first $p$ numbers.
@@ -209,7 +208,7 @@ There is no largest prime number.
 \item But $q + 1$ is greater than $1$, thus divisible by some prime
 number not in the first $p$ numbers.\qedhere
 \end{enumerate}
-\end{prf}
+\end{proof}
 
 \end{frame}
 
@@ -231,7 +230,7 @@ number not in the first $p$ numbers.\qedhere
 
 \section{Some notes}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile,allowframebreaks]
 \frametitle{Some notes}
 
 \begin{itemize}
@@ -257,15 +256,15 @@ The \verb:beamer-rl: class swap the definition of \verb:\blacktriangleright: wit
 
 \bigskip
 
-{\selectlanguage{nil}
+{\renewcommand{\arraystretch}{1.3}
 \centering
-\begin{tabular}{c|cc}
+\begin{tabular}{ccc}
 \hline
  &  \verb:\blacktriangleright: & \verb:\blacktriangleleft:   \\
 \hline 
 LTR context & \blacktriangleright & \blacktriangleleft \\
 \hline
-RTL context & {\selectlanguage{arabic}\blacktriangleright} & {\selectlanguage{arabic}\blacktriangleleft} \\
+RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\blacktriangleleft \\
 \hline
 \end{tabular}
 \par
@@ -273,10 +272,33 @@ RTL context & {\selectlanguage{arabic}\blacktriangleright} & {\selectlanguage{ar
 
 \bigskip
 
+
+\item
+
+Class option \verb:arabic: call an Arabic dictionary to translate strings like \verb:theorem:, \verb:example:, \verb:definition: ....  
+
+
+\medskip 
+ 
+{\selectlanguage{nil}
+\verb:\documentclass[arabic]{beamer-rl}:
+}
+
+\medskip
+
+
 \item
 In some cases you  need to use \verb:\babelsublr: command from \verb:bebel: 
 package to insert a left to right text within your right to left text, e.g if you need to insert a \verb:pspicture: drawing in RTL context 
+
+\medskip 
+ 
+{\selectlanguage{nil}
+\verb:\bebelsublr{LTR context ... }:
+}
+
 \end{itemize}
+
 
 \end{frame}
 
