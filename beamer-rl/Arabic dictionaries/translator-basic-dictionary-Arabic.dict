@@ -32,7 +32,6 @@
 \providetranslation{figure}{شكل}
 \providetranslation{From}{من}
 \providetranslation{from}{من}
-\providetranslation{From?}{من أين؟}
 \providetranslation{Glossary}{قاموس}
 \providetranslation{Index}{فهرس}
 \providetranslation{Introduction}{مدخل}
@@ -86,6 +85,3 @@
 \providetranslation{table}{جدول}
 \providetranslation{To}{إلى}
 \providetranslation{to}{إلى}
-\providetranslation{When?}{متى?}
-\providetranslation{Who?}{من?}
- 
