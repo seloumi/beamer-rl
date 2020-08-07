@@ -496,4 +496,7 @@
 	}%
 }
 
+% set Amiri font as default sans serif 
+\babelfont{sf}{Amiri}
+
 \endinput
