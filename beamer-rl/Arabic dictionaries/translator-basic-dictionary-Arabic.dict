@@ -1,0 +1,87 @@
+\ProvidesDictionary{translator-basic-dictionary}{Arabic}
+
+\providetranslation{Abstract}{ملخص}
+\providetranslation{Addresses}{عناوين}
+\providetranslation{addresses}{عناوين}
+\providetranslation{Address}{عنوان}
+\providetranslation{address}{عنوان}
+\providetranslation{and}{و}
+\providetranslation{Appendix}{ملحق}
+\providetranslation{Authors}{المؤلفين}
+\providetranslation{authors}{المؤلفين}
+\providetranslation{Author}{المؤلف}
+\providetranslation{author}{المؤلف}
+\providetranslation{Bibliography}{مصادر}
+\providetranslation{cc}{نسخة لـ}
+\providetranslation{Chapters}{أبواب}
+\providetranslation{chapters}{أبواب}
+\providetranslation{Chapter}{باب}
+\providetranslation{chapter}{باب}
+\providetranslation{Conclusion}{نتيجة}
+\providetranslation{conclusion}{نتيجة}
+\providetranslation{Contents}{المحتويات}
+\providetranslation{Continuation}{تابع}
+\providetranslation{continuation}{تابع}
+\providetranslation{cont}{تابع} % FIXME: unsure
+\providetranslation{encl (plural)}{}
+\providetranslation{encl (singular)}{}
+\providetranslation{encl}{}
+\providetranslation{Figures}{أشكال}
+\providetranslation{figures}{أشكال}
+\providetranslation{Figure}{شكل}
+\providetranslation{figure}{شكل}
+\providetranslation{From}{من}
+\providetranslation{from}{من}
+\providetranslation{Glossary}{قاموس}
+\providetranslation{Index}{فهرس}
+\providetranslation{Introduction}{مدخل}
+\providetranslation{introduction}{مدخل}
+\providetranslation{List of Figures and Tables}{قائمة الأشكال والجداول}
+\providetranslation{List of Figures}{قائمة الأشكال}
+\providetranslation{List of Tables}{قائمة الجداول}
+\providetranslation{or}{أو}
+\providetranslation{Outline}{الخطوط العريضة}
+\providetranslation{Overview}{نظرة عامة}
+\providetranslation{Pages}{صفحات}
+\providetranslation{pages}{صفحات}
+\providetranslation{Page}{صفحة}
+\providetranslation{page}{صفحة}
+\providetranslation{Paragraphs}{فقرات}
+\providetranslation{paragraphs}{فقرات}
+\providetranslation{Paragraph}{فقرة}
+\providetranslation{paragraph}{فقرة}
+\providetranslation{Parts}{أقسام}
+\providetranslation{parts}{أقسام}
+\providetranslation{Part}{قسم}
+\providetranslation{part}{قسم}
+\providetranslation{Preface}{تمهيد}
+\providetranslation{Proofs}{براهين}
+\providetranslation{proofs}{براهين}
+\providetranslation{Proof}{برهان}
+\providetranslation{proof}{برهان}
+\providetranslation{References}{مراجع}
+\providetranslation{Related work}{أعمال مرتبطة}
+\providetranslation{Related Work}{أعمال مرتبطة}
+\providetranslation{Sections}{فصول}
+\providetranslation{sections}{فصول}
+\providetranslation{Section}{فصل}
+\providetranslation{section}{فصل}
+\providetranslation{See also}{أنظر أيضا}
+\providetranslation{see also}{أنظر أيضا}
+\providetranslation{See}{أنظر}
+\providetranslation{see}{أنظر}
+\providetranslation{Sketch of Proofs}{رسم البراهين}
+\providetranslation{Sketch of proofs}{رسم البراهين}
+\providetranslation{Sketch of Proof}{رسم البرهان}
+\providetranslation{Sketch of proof}{رسم البرهان}
+\providetranslation{Subsections}{فصول فرعية}
+\providetranslation{subsections}{فصول فرعية}
+\providetranslation{Subsection}{فصل فرعي}
+\providetranslation{subsection}{فصل فرعي}
+\providetranslation{Summary}{ملخص}
+\providetranslation{Tables}{جداول}
+\providetranslation{tables}{جداول}
+\providetranslation{Table}{جدول}
+\providetranslation{table}{جدول}
+\providetranslation{To}{إلى}
+\providetranslation{to}{إلى}
