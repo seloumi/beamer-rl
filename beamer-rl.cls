@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{beamer-rl}
-[2019/10/04 v1.3 LaTeX class to patch beamer for right to left presentation with babel]
+[2020/08/16  v1.4a LaTeX class to patch beamer for right to left presentation with babel]
 
 \RequirePackage{kvoptions}
 \RequirePackage{kvsetkeys}
@@ -57,10 +57,10 @@
 
 
 \let\oldpgfpicture\pgfpicture
-\let\oldendpgfpicture\endpgfpicture
+\let\endoldpgfpicture\endpgfpicture
 
 \def\pgfpicture{\babelsublr\bgroup\oldpgfpicture}
-\def\endpgfpicture{\oldendpgfpicture\egroup}
+\def\endpgfpicture{\endoldpgfpicture\egroup}
 
 \let\oldpgfuseshading\pgfuseshading
 \def\pgfuseshading#1{\babelsublr{\oldpgfuseshading{#1}}}
@@ -403,97 +403,94 @@
 %
 
 \def\beamer@framezoom<#1><#2>[#3](#4,#5)(#6,#7){%
-	\par\nointerlineskip%
-	\global\beamer@slidehaszoomtrue%
-	\advance\beamer@zoomcount by1\relax%
-	\def\beamer@zoomborderwidth{0}%
-	\edef\beamer@labelzoomed{beamer@labelzoomed@\the\beamer@zoomframecount @\the\beamer@zoomcount}%
-	\setkeys{beamerzoom}{#3}%
-	\only<#1>{%
-		{\hypersetup{pdfhighlight={/P},pdfborder={0 0 \beamer@zoomborderwidth}}%
-			\global\setbox\@tempboxa=\vbox{\hyperlink{\beamer@labelzoomed}{\vbox to #7{\hbox
-						to#6{\hfil}\vfil}}}}%
-		\ht\@tempboxa=0pt%
-		\wd\@tempboxa=0pt%
-		\dp\@tempboxa=0pt%
-		\setbox\@tempboxa=\vbox{\moveright#4\hbox{\lower#5\vbox{\box\@tempboxa}}}%
-		\ht\@tempboxa=0pt%
-		\wd\@tempboxa=0pt%
-		\dp\@tempboxa=0pt%
-		\global\setbox\beamer@zoombox=\vbox to0pt{\unvbox\beamer@zoombox\box\@tempboxa}%
-	}%
-	\only<#2>{%
-		\pardir TLT% 
-		\@ifundefined{\beamer@labelzoomed}%
-		{%
-			\hypertarget{\beamer@labelzoomed}{}%
-			\expandafter\gdef\csname\beamer@labelzoomed\endcsname{}%
-		}{}%
-		\gdef\beamer@zoomer{%
-			% compute zoom factor
-			\@tempdima=\beamer@frametextheight%
-			\@tempdimb=#7\relax%
-			\@tempcnta=\@tempdimb%
-			\divide\@tempcnta by4096\relax%
-			\multiply\@tempdima by16\relax%
-			\divide\@tempdima by\@tempcnta%
-			\@tempdimb=\paperwidth%
-			\ifbeamer@plainframe%
-			\else%
-			\advance\@tempdimb by-\beamer@leftsidebar%
-			\advance\@tempdimb by-\beamer@rightsidebar\relax%
-			\fi%
-			\@tempdimc=#6\relax%
-			\@tempcntb=\@tempdimc%
-			\divide\@tempcntb by4096\relax%
-			\multiply\@tempdimb by16\relax%
-			\divide\@tempdimb by\@tempcntb%
-			\ifdim\@tempdimb<\@tempdima%
-			\@tempdima=\@tempdimb%
-			\fi%
-			\edef\beamer@temp{\strip@pt\@tempdima}%
-			\@tempdimc=\beamer@frametextheight%
-			\advance\@tempdimc by4pt%
-			\@tempdimb=\paperwidth%
-			\ifbeamer@plainframe%
-			\else%
-			\advance\@tempdimb by-\beamer@leftsidebar%
-			\advance\@tempdimb by-\beamer@rightsidebar\relax%
-			\fi%
-			\setbox\@tempboxa=\vbox{\hsize=\@tempdimb\Acrobatmenu{GoBack}{\vbox to
-					\beamer@frametextheight{\hbox to\@tempdimb{\hfil}\vfil}}}%
-			\ht\@tempboxa=0pt%
-			\wd\@tempboxa=0pt%
-			\dp\@tempboxa=0pt%
-			\setbox\beamer@framebox=\vbox to\beamer@frametextheight{{%
-					\ifbeamer@plainframe\beamer@leftmargin=\Gm@lmargin\fi%
-					\pardir TLT% 
-					\begin{pgfpicture}{\beamer@leftmargin}{-\beamer@frametextheight}{\beamer@leftmargin}{0pt}
-						\pgftext[left,top]{\box\@tempboxa}
-						\pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\@tempdimb}{\@tempdimc}}%
-						\pgfusepath{clip}
-						\begingroup
-						\pgftransformscale{\beamer@temp}
-						\@tempdima=#4\relax%
-						\@tempdimb=#5\relax%
-						{\pgftransformshift{\pgfpoint{-\@tempdima}{\@tempdimb}}%
-							\pgftext[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox}}}
-						\endgroup
-					\end{pgfpicture}%
-			}}%
-			
-			\setbox\beamer@framebox=\vbox{%
-				\nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
-				\nointerlineskip\unvbox\beamer@frametitlebox%
-				\nobreak%
-				\box\beamer@framebox %
-				\nobreak%
-				\vss%
-				\beamer@exitcode%
-			}%
-			\global\setbox\beamer@footins=\box\voidb@x% no footnotes in zoomed slides
-		}%
-	}%
+  \par\nointerlineskip%
+  \global\beamer@slidehaszoomtrue%
+  \advance\beamer@zoomcount by1\relax%
+  \def\beamer@zoomborderwidth{0}%
+  \edef\beamer@labelzoomed{beamer@labelzoomed@\the\beamer@zoomframecount @\the\beamer@zoomcount}%
+  \setkeys{beamerzoom}{#3}%
+  \only<#1>{%
+    {\hypersetup{pdfhighlight={/P},pdfborder={0 0 \beamer@zoomborderwidth}}%
+    \global\setbox\@tempboxa=\vbox{\hyperlink{\beamer@labelzoomed}{\vbox to #7{\hbox
+          to#6{\hfil}\vfil}}}}%
+    \ht\@tempboxa=0pt%
+    \wd\@tempboxa=0pt%
+    \dp\@tempboxa=0pt%
+    \setbox\@tempboxa=\vbox{\moveright#4\hbox{\lower#5\vbox{\box\@tempboxa}}}%
+    \ht\@tempboxa=0pt%
+    \wd\@tempboxa=0pt%
+    \dp\@tempboxa=0pt%
+    \global\setbox\beamer@zoombox=\vbox to0pt{\unvbox\beamer@zoombox\box\@tempboxa}%
+  }%
+  \only<#2>{%
+    \@ifundefined{\beamer@labelzoomed}%
+    {%
+      \hypertarget{\beamer@labelzoomed}{}%
+      \expandafter\gdef\csname\beamer@labelzoomed\endcsname{}%
+    }{}%
+    \gdef\beamer@zoomer{%
+      % compute zoom factor
+      \@tempdima=\beamer@frametextheight%
+      \@tempdimb=#7\relax%
+      \@tempcnta=\@tempdimb%
+      \divide\@tempcnta by4096\relax%
+      \multiply\@tempdima by16\relax%
+      \divide\@tempdima by\@tempcnta%
+      \@tempdimb=\paperwidth%
+      \ifbeamer@plainframe%
+      \else%
+        \advance\@tempdimb by-\beamer@leftsidebar%
+        \advance\@tempdimb by-\beamer@rightsidebar\relax%
+      \fi%
+      \@tempdimc=#6\relax%
+      \@tempcntb=\@tempdimc%
+      \divide\@tempcntb by4096\relax%
+      \multiply\@tempdimb by16\relax%
+      \divide\@tempdimb by\@tempcntb%
+      \ifdim\@tempdimb<\@tempdima%
+        \@tempdima=\@tempdimb%
+      \fi%
+      \edef\beamer@temp{\strip@pt\@tempdima}%
+      \@tempdimc=\beamer@frametextheight%
+      \advance\@tempdimc by4pt%
+      \@tempdimb=\paperwidth%
+      \ifbeamer@plainframe%
+      \else%
+        \advance\@tempdimb by-\beamer@leftsidebar%
+        \advance\@tempdimb by-\beamer@rightsidebar\relax%
+      \fi%
+      \setbox\@tempboxa=\vbox{\hsize=\@tempdimb\Acrobatmenu{GoBack}{\vbox to
+          \beamer@frametextheight{\hbox to\@tempdimb{\hfil}\vfil}}}%
+      \ht\@tempboxa=0pt%
+      \wd\@tempboxa=0pt%
+      \dp\@tempboxa=0pt%
+      \setbox\beamer@framebox=\vbox to\beamer@frametextheight{{%
+          \ifbeamer@plainframe\beamer@leftmargin=\Gm@lmargin\fi%
+          \begin{oldpgfpicture}{\beamer@leftmargin}{-\beamer@frametextheight}{\beamer@leftmargin}{0pt}
+            \pgftext[left,top]{\box\@tempboxa}
+            \pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\ifcase\bbl@thepardir \else-\fi\@tempdimb}{\@tempdimc}}%
+            \pgfusepath{clip}
+            \begingroup
+              \pgftransformscale{\beamer@temp}
+              \@tempdima=#4\relax%
+              \@tempdimb=#5\relax%
+              {\pgftransformshift{\pgfpoint{-\@tempdima}{\@tempdimb}}%
+              \pgftext[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox}}}
+            \endgroup
+          \end{oldpgfpicture}%
+        }}%
+      \setbox\beamer@framebox=\vbox{%
+        \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
+        \nointerlineskip\unvbox\beamer@frametitlebox%
+        \nobreak%
+        \box\beamer@framebox%
+        \nobreak%
+        \vss%
+        \beamer@exitcode%
+      }%
+      \global\setbox\beamer@footins=\box\voidb@x% no footnotes in zoomed slides
+    }%
+  }%
 }
 
 \endinput

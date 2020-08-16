@@ -113,6 +113,85 @@
 
 \end{frame}
 
+\section{بعض الملاحظات}
+
+\begin{frame}[fragile,allowframebreaks]
+\frametitle{بعض الملاحظات}
+
+\begin{itemize}
+\item
+يمكن اضافة كل الخيارات التي تتيحها الفئة \verb:beamer: عند استدعاء الفئة \verb:beamer-rl:
+
+كما يمكن تمرير خيارات اضافية للحزمة 
+ \verb:babel: 
+ عند استدعاء الفئة \verb:beamer-rl: على الشكل:
+
+\medskip 
+ 
+{\selectlanguage{nil}
+\verb:\documentclass[babel={<babel options>}]{beamer-rl}:
+}
+
+\medskip
+
+\item
+الفئة 
+ \verb:beamer-rl: تقوم بتبادل لكل من التعليمتين  \cs{blacktriangleright} و   \cs{blacktriangleleft} في حالة نص من اليمين لليسار
+
+\bigskip
+
+{%
+\renewcommand{\arraystretch}{1.3}
+\centering
+\begin{tabular}{ccc}
+\hline
+ &  \verb:\blacktriangleright: & \verb:\blacktriangleleft:   \\
+\hline 
+LTR context & \blacktriangleright & \blacktriangleleft \\
+\hline
+RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\blacktriangleleft \\
+\hline
+\end{tabular}
+\par
+}
+
+\bigskip
+ 
+\item
+
+الخيار 
+\verb:arabic:
+للفئة يمكن من استدعاء قاموس عربي لترجمة بعض المفردات مثل 
+\verb:example: ،\verb:definition: ،\verb:theorem: ....  
+
+
+\medskip 
+ 
+{\selectlanguage{nil}
+\verb:\documentclass[arabic]{beamer-rl}:
+}
+
+\medskip
+ 
+\item
+في بعض الحالات يمكن استعمال التعليمة 
+ \cs{babelsublr} التي توفرها الحزمة  \verb:bebel: 
+لادراج نص من اليسار لليمين (لاتيني) في وسط نص من اليمين لليسار،
+ على سبيل المثال  في حال الحاجة إلى ادراج رسم  
+ \verb:pspicture: ضمن نص من اليمين لليسار. 
+
+\medskip 
+ 
+{\selectlanguage{nil}
+\verb:\bebelsublr{LTR context ... }:
+}
+
+\end{itemize}
+
+
+\end{frame}
+
+
 \section{أمثلة}
 \subsection{الإطارات}
 
@@ -221,93 +300,17 @@ number not in the first $p$ numbers.\qedhere
 \begin{frame}[fragile]
 \frametitle{التكبير}
 
-\framezoom<1><2>[border=2](2cm,2cm)(2cm,2cm)
+\framezoom<1><2>[border=2](3cm,2cm)(2cm,2cm)
 \pgfimage[height=5cm]{example-image}
 
 \selectlanguage{nil}
 
 \begin{verbatim}
-\framezoom<1><2>[border=2](2cm,2cm)(2cm,2cm)
+\framezoom<1><2>[border=2](3cm,2cm)(2cm,2cm)
+% (3cm,2cm)=(<upper right x>,<upper right y>)
+% (2cm,2cm)=(<zoom area width>,<zoom area depth>)
 \pgfimage[height=5cm]{example-image}
 \end{verbatim}
-\end{frame}
-
-\section{بعض الملاحظات}
-
-\begin{frame}[fragile,allowframebreaks]
-\frametitle{بعض الملاحظات}
-
-\begin{itemize}
-\item
-يمكن اضافة كل الخيارات التي تتيحها الفئة \verb:beamer: عند استدعاء الفئة \verb:beamer-rl:
-
-كما يمكن تمرير خيارات اضافية للحزمة 
- \verb:babel: 
- عند استدعاء الفئة \verb:beamer-rl: على الشكل:
-
-\medskip 
- 
-{\selectlanguage{nil}
-\verb:\documentclass[babel={<babel options>}]{beamer-rl}:
-}
-
-\medskip
-
-\item
-الفئة 
- \verb:beamer-rl: تقوم بتبادل لكل من التعليمتين  \cs{blacktriangleright} و   \cs{blacktriangleleft} في حالة نص من اليمين لليسار
-
-\bigskip
-
-{%
-\renewcommand{\arraystretch}{1.3}
-\centering
-\begin{tabular}{ccc}
-\hline
- &  \verb:\blacktriangleright: & \verb:\blacktriangleleft:   \\
-\hline 
-LTR context & \blacktriangleright & \blacktriangleleft \\
-\hline
-RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\blacktriangleleft \\
-\hline
-\end{tabular}
-\par
-}
-
-\bigskip
- 
-\item
-
-الخيار 
-\verb:arabic:
-للفئة يمكن من استدعاء قاموس عربي لترجمة بعض المفردات مثل 
-\verb:example: ،\verb:definition: ،\verb:theorem: ....  
-
-
-\medskip 
- 
-{\selectlanguage{nil}
-\verb:\documentclass[arabic]{beamer-rl}:
-}
-
-\medskip
- 
-\item
-في بعض الحالات يمكن استعمال التعليمة 
- \cs{babelsublr} التي توفرها الحزمة  \verb:bebel: 
-لادراج نص من اليسار لليمين (لاتيني) في وسط نص من اليمين لليسار،
- على سبيل المثال  في حال الحاجة إلى ادراج رسم  
- \verb:pspicture: ضمن نص من اليمين لليسار. 
-
-\medskip 
- 
-{\selectlanguage{nil}
-\verb:\bebelsublr{LTR context ... }:
-}
-
-\end{itemize}
-
-
 \end{frame}
 
 \end{document}
