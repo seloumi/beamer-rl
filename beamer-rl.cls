@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{beamer-rl}
-[2020/08/16  v1.4a LaTeX class to patch beamer for right to left presentation with babel]
+[2020/08/04 v1.4a  LaTeX class to patch beamer for right to left presentation with babel]
 
 \RequirePackage{kvoptions}
 \RequirePackage{kvsetkeys}
@@ -491,6 +491,37 @@
       \global\setbox\beamer@footins=\box\voidb@x% no footnotes in zoomed slides
     }%
   }%
+}
+
+
+%
+% Shrink stuff
+%
+
+\def\beamer@shrinkframebox{%
+  \@tempdima=\ht\beamer@framebox%
+%  \ifdim\@tempdima>\beamer@frametextheight%
+    \@tempcnta=\@tempdima%
+    \divide\@tempcnta by 65536\relax%
+    \@tempdimc=\beamer@frametextheight%
+    \divide\@tempdimc by\@tempcnta\relax%
+    \ifdim\@tempdimc>\beamer@shrinkfactor pt%
+      \@tempdimc=\beamer@shrinkfactor pt%
+    \else%
+      \@tempdima=-100\@tempdimc%
+      \advance\@tempdima by100pt%
+      \ClassWarning{beamer}{Frame text is shrunk by a factor of %
+      \strip@pt\@tempdima\space percent instead of
+      \beamer@shrinkpercentage\space percent}%
+    \fi%
+    \edef\beamer@factortemp{\strip@pt\@tempdimc}%
+    \setbox\beamer@framebox=\vbox to\beamer@frametextheight{%
+      \begin{oldpgfpicture}{0pt}{-\beamer@frametextheight}{0pt}{0pt}
+        {\pgftransformscale{\beamer@factortemp}%
+          \pgftext[left,top]{\box\beamer@framebox}}%
+      \end{oldpgfpicture}%
+    }%
+%  \fi%
 }
 
 \endinput
