@@ -32,12 +32,12 @@
 
 \ifluatex
 \else
-\ClassError{beamer-rl}{beamer-rl require luatex}
+\ClassError{beamer-rl}{beamer-rl require lualatex}
 \fi
 
 \LoadClass[hyperref={unicode}]{beamer}
 
-\RequirePackage[nil,bidi=basic-r]{babel}
+\RequirePackage[nil,bidi=basic]{babel}
 
 \def\reset@temp#1#2{\expandafter\let\csname beamer@@tmpop@#1@#2\endcsname\relax}
 \def\@@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate{#1}{#2}}
@@ -468,7 +468,7 @@
           \ifbeamer@plainframe\beamer@leftmargin=\Gm@lmargin\fi%
           \begin{oldpgfpicture}{\beamer@leftmargin}{-\beamer@frametextheight}{\beamer@leftmargin}{0pt}
             \pgftext[left,top]{\box\@tempboxa}
-            \pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\ifcase\bbl@thepardir \else-\fi\@tempdimb}{\@tempdimc}}%
+            \pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\ifcase\bbl@thepardir +\else-\fi\@tempdimb}{\@tempdimc}}%
             \pgfusepath{clip}
             \begingroup
               \pgftransformscale{\beamer@temp}
@@ -523,5 +523,13 @@
     }%
 %  \fi%
 }
+
+% Use Amiri as default sans serif font
+
+\font\sffont@rl="Amiri" at 10pt
+\ifx\sffont@rl\nullfont
+\else
+\babelfont{sf}{Amiri}
+\fi
 
 \endinput

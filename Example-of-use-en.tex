@@ -1,9 +1,10 @@
 \documentclass[arabic,babel={layout=lists}]{beamer-rl}
 \usepackage{hologo} % pdflatex, xelatex, lualatex logos 
+\usepackage{verbatim}
+\usepackage{etoolbox}
 
 \babelprovide[import=ar-DZ, main]{arabic}
 \babelprovide[import,language=Default]{english}
-\babelfont{sf}{Amiri}
 
 % Themes without Navigation Bars
 %\mode<presentation>{\usetheme{default}}
@@ -53,10 +54,29 @@
 {\color{blue} Bug tracker: } https://github.com/seloumi/beamer-rl/issues
 }
 
-
 \date{{\selectlanguage{english} \today}}
 
 \setbeamercovered{transparent=10}
+
+% reduce space above and below verbatim env
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
+\makeatother
+
+\newenvironment{codeblock}{%
+\selectlanguage{nil}
+\smallskip\hfill%
+\beamercolorbox[wd=\linewidth,sep=.3ex,dp=1ex]{block body}
+\endgraf
+\verbatim
+}{%
+\endverbatim
+\endbeamercolorbox
+\hfill
+\smallskip
+%\end{verbatim}
+}
+
 
 \begin{document}
 
@@ -76,12 +96,12 @@
 
 \begin{frame}[fragile]
 \frametitle{Introduction}
-Creating beamer presentation for  right to left language  (like arabic) using \hologo{pdfLaTeX} or \hologo{XeLaTeX} still poses many problems due to bugs not currently resolved especially for colors and hyperlinks
+Creating beamer presentation for  right to left languages  (like arabic) using \hologo{pdfLaTeX} or \hologo{XeLaTeX} still poses many problems due to bugs not currently resolved especially for colors and hyperlinks
 
 The \hologo{LuaTeX} team set solutions for  these issues thanks to them and to \textit{Javier~Bezos} for  his works on the package \verb|babel| and \verb|bidi| writing    
 
-This class provides patchs of some beamer templates and commands 
-for right to left presentation, this package call babel with \verb|bidi=basic-r| option and require lualatex engine
+This class provides patchs of some beamer templates and commands to create  
+ right to left beamer presentation, the class call babel with \verb|bidi=basic| option and require \hologo{LuaLaTeX} engine
 
 \end{frame}
 
@@ -90,19 +110,18 @@ for right to left presentation, this package call babel with \verb|bidi=basic-r|
 \begin{frame}[fragile]
 \frametitle{How to use beamer-rl}
 
-\selectlanguage{nil}
-
-\begin{verbatim}
+\begin{codeblock}
 \documentclass{beamer-rl}
-\babelprovide[import=ar-DZ, main]{arabic}
-\babelfont{sf}{Amiri}
 
-\mode<presentation>{\usetheme{Warsaw}}
+% import language
+\babelprovide[import=ar-DZ, main]{arabic} 
+
+\usetheme{Madrid}
+
 \begin{document}
 ...
 \end{document}
-
-\end{verbatim}
+\end{codeblock}
 
 \end{frame}
 
@@ -114,6 +133,14 @@ for right to left presentation, this package call babel with \verb|bidi=basic-r|
 \begin{itemize}
 
 \item
+The class define \verb:Amiri: as default sans serif font, we can 
+modify this in the preambule  with   
+
+\begin{codeblock}
+\babelfont{sf}{<font name>}
+\end{codeblock}
+
+\item
 
 All options provided by \verb:beamer:  can be added  with  \verb:beamer-rl:
 
@@ -121,13 +148,9 @@ Additional options can also be passed to  package
  \verb:babel: 
  with  \verb:beamer-rl: like this
 
-\medskip 
- 
-{\selectlanguage{nil}
-\verb:\documentclass[babel={<babel options>}]{beamer-rl}:
-}
-
-\medskip
+\begin{codeblock}
+\documentclass[babel={<babel options>}]{beamer-rl}
+\end{codeblock}
 
 \item
 The \verb:beamer-rl: class swap the definition of \verb:\blacktriangleright: with  \verb:\blacktriangleleft: in RTL context
@@ -150,49 +173,45 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 
 \bigskip
 
-
 \item
 
 Class option \verb:arabic: call an Arabic dictionary to translate strings like \verb:theorem:, \verb:example:, \verb:definition: ....  
 
 
-\medskip 
- 
-{\selectlanguage{nil}
-\verb:\documentclass[arabic]{beamer-rl}:
-}
-
-\medskip
-
+\begin{codeblock}
+\documentclass[arabic]{beamer-rl}
+\end{codeblock}
 
 \item
 In some cases you  need to use \verb:\babelsublr: command from \verb:bebel: 
 package to insert a left to right text within your right to left text, e.g if you need to insert a \verb:pspicture: drawing in RTL context 
 
-\medskip 
- 
-{\selectlanguage{nil}
-\verb:\bebelsublr{LTR context ... }:
-}
+\begin{codeblock}
+\bebelsublr{LTR context ... }
+\end{codeblock}
 
 \end{itemize}
 
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}[plain]{}
+
+\fontsize{70}{60}\selectfont\centerline{Examples}
 
 \end{frame}
 
-
-\section{Examples}
 \subsection{Blocks}
 
 \begin{frame}[fragile]
 \frametitle{Blocks}
 
-{\selectlanguage{nil}
-\verb:\setbeamertemplate{blocks}[default]:
-}
+\begin{codeblock}
+\setbeamertemplate{blocks}[default]
+\end{codeblock}
 
 \setbeamertemplate{blocks}[default]
-
 
 \begin{block}{Lorem}
   \selectlanguage{nil} 
@@ -201,9 +220,9 @@ package to insert a left to right text within your right to left text, e.g if yo
   electric current from a battery was switched on and off.
 \end{block}
 
-{\selectlanguage{nil}
-\verb:\setbeamertemplate{blocks}[rounded][shadow=true]:
-}
+\begin{codeblock}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\end{codeblock}
 
 \setbeamertemplate{blocks}[rounded][shadow=true]
 
@@ -218,51 +237,98 @@ package to insert a left to right text within your right to left text, e.g if yo
 
 \subsection{Lists}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile,allowframebreaks]
 \frametitle{enumerate, itemize}
 
-\begin{enumerate}
-\item first item
-\item second item
-\item third item
-\end{enumerate}
+\begin{columns}[t,onlytextwidth]
 
+\begin{column}{2cm}
+\begin{enumerate}
+\item First 
+\item Second 
+\end{enumerate}
+\end{column}
+\begin{column}{8.8cm}
+\begin{codeblock}
+\setbeamertemplate{enumerate item}[ball]
+\begin{enumerate}
+\item First 
+\item Second 
+\end{enumerate}
+\end{codeblock}
+\end{column}
+
+\end{columns}
+
+\vfill
 \setbeamertemplate{itemize item}[triangle]
 
-{\selectlanguage{nil}
-\verb|\setbeamertemplate{itemize item}[triangle]|
-}
+\begin{columns}[t,onlytextwidth]
 
-
+\begin{column}{2cm}
 \begin{itemize}
-\item first item
-\item second item
-\item third item
+\item First
+\item Second 
 \end{itemize}
+\end{column}
+\begin{column}{8.8cm}
+\begin{codeblock}
+% in RTL context
+\setbeamertemplate{itemize item}[triangle]
+\begin{itemize}
+\item First
+\item Second 
+\end{itemize}
+\end{codeblock}
+\end{column}
+
+\end{columns}
+
+\framebreak
 
 \selectlanguage{nil}
-\shapemode=2
 
-\begin{itemize}
-\item first item
-\item second item
-\item third item
+\begin{columns}[t]
+\begin{column}{2cm}
+\begin{itemize}\shapemode=2
+\item First
+\item Second 
 \end{itemize}
-
+\end{column}
+\begin{column}{8.5cm}
+\begin{codeblock}
+% in LTR context 
+\setbeamertemplate{itemize item}[triangle]
+\begin{itemize}\shapemode=2
+\item First
+\item Second 
+\end{itemize}
+\end{codeblock}
+\end{column}
+\end{columns}
 
 \end{frame}
 
 \subsection{Hyperlinks}
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Hyperlinks}
 \begin{itemize}
-\item<1-> First item.
-\item<2-> Second item.
-\item<3-> Third item.
+\item<1-> First.
+\item<2-> Second.
 \end{itemize}
-\hyperlink{jumptosecond}{\beamergotobutton{return to second slide}}
-\hypertarget<2>{jumptosecond}{}
+
+\hyperlink{jumptofirst}{\beamergotobutton{return to first slide}}
+\hypertarget<1>{jumptofirst}{}
+
+\pause
+
+\begin{codeblock}
+\hyperlink{jumptofirst}
+{\beamergotobutton{return to first slide}}
+\hypertarget<1>{jumptofirst}{}
+\end{codeblock}
+
 \end{frame}
 
 
@@ -292,19 +358,27 @@ number not in the first $p$ numbers.\qedhere
 \begin{frame}[fragile]
 \frametitle{Zooming}
 
-\framezoom<1><2>[border=2](3cm,2cm)(2cm,2cm)
-\pgfimage[height=5cm]{example-image}
+\framezoom<1><2>[border=2](1cm,1cm)(2cm,2cm)
+\pgfimage[height=4cm]{example-image}
 
-\selectlanguage{nil}
-
-\begin{verbatim}
-\framezoom<1><2>[border=2](3cm,2cm)(2cm,2cm)
-% (3cm,2cm)=(<upper right x>,<upper right y>)
+\begin{codeblock}
+\framezoom<1><2>[border=2](1cm,1cm)(2cm,2cm)
+% (1cm,1cm)=(<upper right x>,<upper right y>)
 % (2cm,2cm)=(<zoom area width>,<zoom area depth>)
 \pgfimage[height=5cm]{example-image}
-\end{verbatim}
+\end{codeblock}
 
 \end{frame}
 
+%\selectlanguage{nil}
+
+\begin{frame}{quotation}
+
+\selectlanguage{nil}
+
+\begin{quotation}
+Text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text 
+\end{quotation}
+\end{frame}
 
 \end{document}

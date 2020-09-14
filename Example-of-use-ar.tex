@@ -1,8 +1,9 @@
 \documentclass[arabic,babel={layout=lists}]{beamer-rl}
 \usepackage{hologo} % pdflatex, xelatex, lualatex logos 
+\usepackage{verbatim}
+\usepackage{etoolbox}
 
 \babelprovide[import=ar-DZ, main]{arabic}
-\babelfont{sf}{Amiri}
 
 % Themes without Navigation Bars
 %\mode<presentation>{\usetheme{default}}
@@ -59,6 +60,27 @@
 
 \def\cs#1{\babelsublr{\texttt{\textbackslash#1}}}
 
+% reduce space above and below verbatim env
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
+\makeatother
+
+\newenvironment{codeblock}{%
+\selectlanguage{nil}
+\smallskip\hfill%
+\beamercolorbox[wd=\linewidth,sep=.3ex,dp=1ex]{title}
+\endgraf
+\verbatim
+}{%
+\endverbatim
+\endbeamercolorbox
+\hfill
+\smallskip
+%\end{verbatim}
+}
+
+
+
 \begin{document}
 
 \parskip=6pt
@@ -86,7 +108,7 @@
 \verb|babel| وخصوصا الكتابة بالاتجاهين (\verb|bidi| writing)    
 
 هذه الفئة (class) تعدل في بعض اوامر وتعليمات beamer لغرض انشاء عروض من اليمين إلى اليسار (العربية على سبيل المثال)، الفئة تستدعي \verb|babel| مع الخيار 
-\verb|bidi=basic-r|
+\verb|bidi=basic|
  والمعالجة تتطلب استخدام 
 \hologo{LuaLaTeX} 
 
@@ -97,19 +119,18 @@
 \begin{frame}[fragile]
 \frametitle{كيفية استعمال الفئة}
 
-\selectlanguage{nil}
-
-\begin{verbatim}
+\begin{codeblock}
 \documentclass{beamer-rl}
-\babelprovide[import=ar-DZ, main]{arabic}
-\babelfont{sf}{Amiri}
 
-\mode<presentation>{\usetheme{Warsaw}}
+% import languages
+\babelprovide[import=ar-DZ, main]{arabic} 
+
+\usetheme{CambridgeUS}
+
 \begin{document}
 ...
 \end{document}
-
-\end{verbatim}
+\end{codeblock}
 
 \end{frame}
 
@@ -119,6 +140,15 @@
 \frametitle{بعض الملاحظات}
 
 \begin{itemize}
+
+\item
+الفئة تعرف خط الأميري (\verb:Amiri:) ضمنيا كخط أساسي للكتابة 
+\babelsublr{sans serif}، يمكن تغيير ذلك مع بداية الوثيقة باستعمال التعليمة 
+
+\begin{codeblock}
+\babelfont{sf}{<font name>}
+\end{codeblock}
+
 \item
 يمكن اضافة كل الخيارات التي تتيحها الفئة \verb:beamer: عند استدعاء الفئة \verb:beamer-rl:
 
@@ -128,11 +158,9 @@
 
 \medskip 
  
-{\selectlanguage{nil}
-\verb:\documentclass[babel={<babel options>}]{beamer-rl}:
-}
-
-\medskip
+\begin{codeblock}
+\documentclass[babel={<babel options>}]{beamer-rl}
+\end{codeblock}
 
 \item
 الفئة 
@@ -164,46 +192,44 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 للفئة يمكن من استدعاء قاموس عربي لترجمة بعض المفردات مثل 
 \verb:example: ،\verb:definition: ،\verb:theorem: ....  
 
+\begin{codeblock}
+\documentclass[arabic]{beamer-rl}
+\end{codeblock}
 
-\medskip 
- 
-{\selectlanguage{nil}
-\verb:\documentclass[arabic]{beamer-rl}:
-}
-
-\medskip
- 
 \item
 في بعض الحالات يمكن استعمال التعليمة 
  \cs{babelsublr} التي توفرها الحزمة  \verb:bebel: 
 لادراج نص من اليسار لليمين (لاتيني) في وسط نص من اليمين لليسار،
  على سبيل المثال  في حال الحاجة إلى ادراج رسم  
  \verb:pspicture: ضمن نص من اليمين لليسار. 
-
-\medskip 
  
-{\selectlanguage{nil}
-\verb:\bebelsublr{LTR context ... }:
-}
+\begin{codeblock}
+\bebelsublr{LTR context ... }
+\end{codeblock}
 
 \end{itemize}
 
+\end{frame}
+
+\section{أمثلة}
+
+\begin{frame}[plain]{}
+
+\fontsize{70}{60}\selectfont\centerline{أمثـلة}
 
 \end{frame}
 
 
-\section{أمثلة}
 \subsection{الإطارات}
 
 \begin{frame}[fragile]
 \frametitle{الإطارات}
 
-{\selectlanguage{nil}
-\verb:\setbeamertemplate{blocks}[default]:
-}
+\begin{codeblock}
+\setbeamertemplate{blocks}[default]
+\end{codeblock}
 
 \setbeamertemplate{blocks}[default]
-
 
 \begin{block}{أورستد}
   لاحظ هانز أورستد في 21 أبريل 1820 وهو يُعد أحد التجارب أن إبرة
@@ -211,9 +237,9 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
   دائرة كهربائية يُعدها.
 \end{block}
 
-{\selectlanguage{nil}
-\verb:\setbeamertemplate{blocks}[rounded][shadow=true]:
-}
+\begin{codeblock}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\end{codeblock}
 
 \setbeamertemplate{blocks}[rounded][shadow=true]
 
@@ -225,51 +251,102 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 
 \end{frame}
 
+
 \subsection{القوائم}
 
-\begin{frame}[fragile]
-\frametitle{enumerate, itemize}
+\begin{frame}[fragile,allowframebreaks]
+\frametitle{القوائم}
 
+\begin{columns}[t,onlytextwidth]
+
+\begin{column}{2cm}
 \begin{enumerate}
-\item فيزياء تطبيقية
-\item فيزياء تجريبية
-\item فيزياء نظرية
+\item First 
+\item Second 
 \end{enumerate}
+\end{column}
+\begin{column}{8.8cm}
+\begin{codeblock}
+\setbeamertemplate{enumerate item}[ball]
+\begin{enumerate}
+\item First 
+\item Second 
+\end{enumerate}
+\end{codeblock}
+\end{column}
 
+\end{columns}
+
+\vfill
 \setbeamertemplate{itemize item}[triangle]
 
-{\selectlanguage{nil}
-\verb|\setbeamertemplate{itemize item}[triangle]|
-}
+\begin{columns}[t,onlytextwidth]
 
+\begin{column}{2cm}
 \begin{itemize}
-\item فيزياء تطبيقية
-\item فيزياء تجريبية
-\item فيزياء نظرية
+\item First
+\item Second 
 \end{itemize}
+\end{column}
+\begin{column}{8.8cm}
+\begin{codeblock}
+% in RTL context
+\setbeamertemplate{itemize item}[triangle]
+\begin{itemize}
+\item First
+\item Second 
+\end{itemize}
+\end{codeblock}
+\end{column}
+
+\end{columns}
+
+\framebreak
 
 \selectlanguage{nil}
-\shapemode=2
 
-\begin{itemize}
-\item first item
-\item second item
-\item third item
+\begin{columns}[t]
+\begin{column}{2cm}
+\begin{itemize}\shapemode=2
+\item First
+\item Second 
 \end{itemize}
+\end{column}
+\begin{column}{8.5cm}
+\begin{codeblock}
+% in LTR context 
+\setbeamertemplate{itemize item}[triangle]
+\begin{itemize}\shapemode=2
+\item First
+\item Second 
+\end{itemize}
+\end{codeblock}
+\end{column}
+\end{columns}
 
 \end{frame}
 
 \subsection{الروابط}
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{الروابط}
 \begin{itemize}
 \item<1-> العنصر الأول.
 \item<2-> العنصر الثاني.
-\item<3-> العنصر الثالث.
 \end{itemize}
-\hyperlink{jumptosecond}{\beamerreturnbutton{الرجوع إلى الشريحة الثانية}}
-\hypertarget<2>{jumptosecond}{}
+\hyperlink{jumptosecond}{\beamerreturnbutton{الرجوع إلى الشريحة الأولى}}
+\hypertarget<1>{jumptosecond}{}
+
+\pause
+
+{
+\let\ttfamily\sffamily
+\begin{codeblock}
+\hyperlink{jumptofirst}
+{\beamergotobutton{الرجوع إلى الشريحة الأولى}}
+\hypertarget<1>{jumptofirst}{}
+\end{codeblock}
+}
 
 \end{frame}
 
@@ -300,17 +377,16 @@ number not in the first $p$ numbers.\qedhere
 \begin{frame}[fragile]
 \frametitle{التكبير}
 
-\framezoom<1><2>[border=2](3cm,2cm)(2cm,2cm)
-\pgfimage[height=5cm]{example-image}
+\framezoom<1><2>[border=2](1cm,1cm)(2cm,2cm)
+\pgfimage[height=4cm]{example-image}
 
-\selectlanguage{nil}
-
-\begin{verbatim}
-\framezoom<1><2>[border=2](3cm,2cm)(2cm,2cm)
-% (3cm,2cm)=(<upper right x>,<upper right y>)
+\begin{codeblock}
+\framezoom<1><2>[border=2](1cm,1cm)(2cm,2cm)
+% (1cm,1cm)=(<upper right x>,<upper right y>)
 % (2cm,2cm)=(<zoom area width>,<zoom area depth>)
 \pgfimage[height=5cm]{example-image}
-\end{verbatim}
+\end{codeblock}
+
 \end{frame}
 
 \end{document}
