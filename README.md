@@ -1,12 +1,11 @@
-﻿# beamer-rl
+# beamer-rl
 
-Patchs  of some  beamer commands and templates for  right to left  presentations using babel with `bidi=basic-r` (lualatex)  
+Patchs  of some  beamer commands and templates for  right to left  presentations using babel with `bidi=basic` (lualatex)  
 
 ```latex
 \documentclass{beamer-rl}
 
 \babelprovide[import=ar-DZ, main]{arabic}
-\babelfont{sf}{Amiri}
 
 
 \usetheme{CambridgeUS}
