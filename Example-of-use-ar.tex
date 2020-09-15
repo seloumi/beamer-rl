@@ -4,6 +4,8 @@
 \usepackage{etoolbox}
 
 \babelprovide[import=ar-DZ, main]{arabic}
+\babelfont{alm}{ALM Fixed}
+
 
 % Themes without Navigation Bars
 %\mode<presentation>{\usetheme{default}}
@@ -78,7 +80,6 @@
 \smallskip
 %\end{verbatim}
 }
-
 
 
 \begin{document}
@@ -340,7 +341,7 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 \pause
 
 {
-\let\ttfamily\sffamily
+\let\ttfamily\almfamily
 \begin{codeblock}
 \hyperlink{jumptofirst}
 {\beamergotobutton{الرجوع إلى الشريحة الأولى}}
