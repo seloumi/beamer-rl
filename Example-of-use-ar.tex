@@ -1,10 +1,10 @@
 \documentclass[arabic,babel={layout=lists}]{beamer-rl}
 \usepackage{hologo} % pdflatex, xelatex, lualatex logos 
-\usepackage{verbatim,listings}
+\usepackage{listings}
 \usepackage{etoolbox}
 
 \babelprovide[import=ar-DZ, main]{arabic}
-\babelfont{tt}[Script=Arabic,Scale=.88]{ALM Fixed}
+\babelfont{alm}[Script=Arabic,Scale=.88]{ALM Fixed}
 
 % Themes without Navigation Bars
 %\mode<presentation>{\usetheme{default}}
@@ -66,12 +66,12 @@
 \preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
 \makeatother
 
-\lstset{language=TeX,basicstyle=\ttfamily,escapeinside={(*@}{@*)}}         
+\lstset{language=TeX,basicstyle=\small\ttfamily,escapeinside={(*@}{@*)}}         
 
 \lstnewenvironment{codeblock}{%
 \selectlanguage{nil}
 \smallskip\hfill%
-\beamercolorbox[wd=\linewidth,sep=.3ex,dp=1ex]{title}
+\beamercolorbox[wd=\linewidth,sep=.2ex,dp=.5ex]{title}
 }{%
 \endbeamercolorbox
 \hfill
@@ -267,8 +267,8 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 \begin{codeblock}
 \setbeamertemplate{enumerate item}[ball]
 \begin{enumerate}
-\item (*@  أولا @*)  
-\item (*@  ثانيا @*)
+\item (*@\almfamily  أولا @*)  
+\item (*@\almfamily  ثانيا @*)
 \end{enumerate}
 \end{codeblock}
 \end{column}
@@ -291,8 +291,8 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 % in RTL context
 \setbeamertemplate{itemize item}[triangle]
 \begin{itemize}
-\item (*@  أولا @*)  
-\item (*@  ثانيا @*)  
+\item (*@\almfamily  أولا @*)  
+\item (*@\almfamily  ثانيا @*)  
 \end{itemize}
 \end{codeblock}
 \end{column}
@@ -310,7 +310,7 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 \item Second 
 \end{itemize}
 \end{column}
-\begin{column}{8.5cm}
+\begin{column}{8.8cm}
 \begin{codeblock}
 % in LTR context 
 \setbeamertemplate{itemize item}[triangle]
@@ -339,7 +339,7 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 
 \begin{codeblock}
 \hyperlink{jumptofirst}
-{\beamergotobutton{(*@  الرجوع إلى الشريحة الأولى @*)}}
+{\beamergotobutton{(*@\almfamily الرجوع إلى الشريحة الأولى@*)}}
 \hypertarget<1>{jumptofirst}{}
 \end{codeblock}
 
