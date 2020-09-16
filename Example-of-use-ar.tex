@@ -1,11 +1,10 @@
 \documentclass[arabic,babel={layout=lists}]{beamer-rl}
 \usepackage{hologo} % pdflatex, xelatex, lualatex logos 
-\usepackage{verbatim}
+\usepackage{verbatim,listings}
 \usepackage{etoolbox}
 
 \babelprovide[import=ar-DZ, main]{arabic}
-\babelfont{alm}{ALM Fixed}
-
+\babelfont{tt}[Script=Arabic,Scale=.88]{ALM Fixed}
 
 % Themes without Navigation Bars
 %\mode<presentation>{\usetheme{default}}
@@ -67,14 +66,13 @@
 \preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
 \makeatother
 
-\newenvironment{codeblock}{%
+\lstset{language=TeX,basicstyle=\ttfamily,escapeinside={(*@}{@*)}}         
+
+\lstnewenvironment{codeblock}{%
 \selectlanguage{nil}
 \smallskip\hfill%
 \beamercolorbox[wd=\linewidth,sep=.3ex,dp=1ex]{title}
-\endgraf
-\verbatim
 }{%
-\endverbatim
 \endbeamercolorbox
 \hfill
 \smallskip
@@ -252,7 +250,6 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 
 \end{frame}
 
-
 \subsection{القوائم}
 
 \begin{frame}[fragile,allowframebreaks]
@@ -262,16 +259,16 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 
 \begin{column}{2cm}
 \begin{enumerate}
-\item First 
-\item Second 
+\item أولا 
+\item ثانيا 
 \end{enumerate}
 \end{column}
 \begin{column}{8.8cm}
 \begin{codeblock}
 \setbeamertemplate{enumerate item}[ball]
 \begin{enumerate}
-\item First 
-\item Second 
+\item (*@  أولا @*)  
+\item (*@  ثانيا @*)
 \end{enumerate}
 \end{codeblock}
 \end{column}
@@ -285,8 +282,8 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 
 \begin{column}{2cm}
 \begin{itemize}
-\item First
-\item Second 
+\item أولا
+\item ثانيا 
 \end{itemize}
 \end{column}
 \begin{column}{8.8cm}
@@ -294,8 +291,8 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 % in RTL context
 \setbeamertemplate{itemize item}[triangle]
 \begin{itemize}
-\item First
-\item Second 
+\item (*@  أولا @*)  
+\item (*@  ثانيا @*)  
 \end{itemize}
 \end{codeblock}
 \end{column}
@@ -340,17 +337,13 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 
 \pause
 
-{
-\let\ttfamily\almfamily
 \begin{codeblock}
 \hyperlink{jumptofirst}
-{\beamergotobutton{الرجوع إلى الشريحة الأولى}}
+{\beamergotobutton{(*@  الرجوع إلى الشريحة الأولى @*)}}
 \hypertarget<1>{jumptofirst}{}
 \end{codeblock}
-}
 
 \end{frame}
-
 
 \subsection{النظريات}
 
