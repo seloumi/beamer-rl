@@ -1,7 +1,6 @@
 \documentclass[arabic,babel={layout=lists}]{beamer-rl}
 \usepackage{hologo} % pdflatex, xelatex, lualatex logos 
 \usepackage{listings}
-\usepackage{etoolbox}
 
 \babelprovide[import=ar-DZ, main]{arabic}
 \babelfont{alm}[Script=Arabic,Scale=.88]{ALM Fixed}
@@ -61,12 +60,7 @@
 
 \def\cs#1{\babelsublr{\texttt{\textbackslash#1}}}
 
-% reduce space above and below verbatim env
-\makeatletter
-\preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
-\makeatother
-
-\lstset{language=TeX,basicstyle=\small\ttfamily,escapeinside={(*@}{@*)}}         
+\lstset{language=TeX,basicstyle=\small\ttfamily,escapeinside={(*@}{@*)},aboveskip=3pt,belowskip=3pt}         
 
 \lstnewenvironment{codeblock}{%
 \selectlanguage{nil}

@@ -524,6 +524,23 @@
 %  \fi%
 }
 
+% Temporary workaround for issue of \shapemode bug 
+% https://github.com/latex3/babel/issues/13
+% this work fine with lists inside frame, if they are included within \vbox
+% may be we need to insert \shapemode=2  or \shapemode=0 manualy  at beginning of list
+% \begin{enumerate} \shapemode=.. &  \begin{itemize} \shapemode=..
+
+\newcounter{beginframepardir}
+
+\let\oldframe\frame
+\def\frame{\setcounter{beginframepardir}{\bbl@getluadir{par}}
+% 0 for TLT 1 for TRT 
+\oldframe}
+
+\redefbeamertemplate*{itemize/enumerate body begin}{default}{\ifnum\value{beginframepardir}=\bbl@getluadir{par} \else\shapemode=2\fi}
+
+\redefbeamertemplate*{description body begin}{default}{\ifnum\value{beginframepardir}=\bbl@getluadir{par} \else\shapemode \tw@\fi}
+
 % Use Amiri as default sans serif font
 
 \font\sffont@rl="Amiri" at 10pt
