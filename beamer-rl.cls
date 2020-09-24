@@ -111,7 +111,6 @@
 	\bmb@temp=\bmb@width%
 	\bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
 	\bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
-	\bmb@dimc=0pt%
 	\ifdim\wd\bmb@box=0pt
 	\bmb@dimc=\bmb@width%
 	\fi
