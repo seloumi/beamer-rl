@@ -90,11 +90,15 @@
 	%
 	\vskip4bp
 	\setbox\bmb@box=\hbox{%
-		\begin{minipage}[b]{\bmb@width}%
+	\begin{minipage}[b]{\bmb@width}%
 			\usebeamercolor[fg]{\bmb@upper}%
 			#2%
 	\end{minipage}}%
 	\ifdim\wd\bmb@box=0pt%
+	\ifcase\bbl@thetextdir\relax
+           \else%
+           \bmb@dimc=\bmb@width%
+           \fi% <--
 	\setbox\bmb@box=\hbox{}%
 	\ht\bmb@box=1.5pt%
 	\bmb@prevheight=-4.5pt%
@@ -111,11 +115,8 @@
 	\bmb@temp=\bmb@width%
 	\bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
 	\bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
-	\ifdim\wd\bmb@box=0pt
-	\bmb@dimc=\bmb@width%
-	\fi
-	\hbox{%
-		\textdir TLT\begin{pgfpicture}{0bp}{+-\ht\bmb@box}{\bmb@dimc}{+-\ht\bmb@box}
+    \hbox dir TLT{%
+		\begin{pgfpicture}{0bp}{+-\ht\bmb@box}{\bmb@dimc}{+-\ht\bmb@box}
 			\ifdim\wd\bmb@box=0pt%
 			\color{lower.bg}%
 			\else%
@@ -165,113 +166,9 @@
 		\colorlet{structure}{upper.bg}%
 		%\color{.}%
 	}
-	
-	\def\endbeamerboxesrounded{%
-	\end{minipage}\egroup%
-	\wd\bmb@box=\bmb@width%
-	\bmb@temp=\dp\bmb@box%
-	\advance\bmb@temp by.5pt%
-	\setbox\bmb@box=\hbox{\raise\bmb@temp\hbox{\box\bmb@box}}%
-	\dp\bmb@box=0pt%
-	\bmb@temp=\wd\bmb@box%
-	\bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
-	\bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
-	\hbox{%
-		\textdir TLT\begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
-			\ifbmb@shadow%
-			{\pgftransformshift{\pgfpoint{4bp}{-3bp}}\pgftext{\copy\bmb@boxshadowball}}
-			\begin{pgfscope}
-				{%
-					\advance\bmb@temp by-1bp%
-					\pgfpathrectangle{\pgfpoint{\bmb@temp}{-7bp}}{\pgfpoint{9bp}{9bp}}%
-					\pgfusepath{clip}
-				}%
-				{\pgftransformshift{\pgfpoint{\bmb@temp}{1bp}}\pgftext{\box\bmb@boxshadowballlarge}}
-			\end{pgfscope}
-			\begin{pgfscope}
-				\advance\bmb@temp by-4bp%
-				\pgfpathrectangle{\pgfpoint{4bp}{-7bp}}{\pgfpoint{\bmb@temp}{5bp}}
-				\pgfusepath{clip}
-				{\pgftransformshift{\pgfpoint{4bp}{-7bp}}\pgftext[left,base]{\copy\bmb@boxshadow}}%
-			\end{pgfscope}
-			\begin{pgfscope}
-				\advance\bmb@temp by 4bp%
-				\bmb@dima=\ht\bmb@box%
-				\advance\bmb@dima by\bmb@prevheight%
-				\advance\bmb@dima by 4bp%
-				\pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
-				\pgfusepath{clip}
-				\advance\bmb@dima by-4bp%
-				{\pgftransformshift{\pgfpoint{\bmb@temp}{\bmb@dima}}\pgftext{\box\bmb@boxshadowball}}
-				\advance\bmb@dima by-1bp%
-				\pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
-				\pgfusepath{clip}
-				\advance\bmb@temp by4bp%
-				{\pgftransformshift{\pgfpoint{\bmb@temp}{-3bp}}%
-					\pgftransformrotate{90}%
-					\pgftext[left,base]{\box\bmb@boxshadow}}%
-			\end{pgfscope}
-			\fi%
-			\unhbox\bmb@colorbox%
-			\pgfpathqmoveto{-4bp}{1bp}
-			\pgfpathqcurveto{-4bp}{-1.2bp}{-2.2bp}{-3bp}{0bp}{-3bp}
-			\pgfpathlineto{\pgfpoint{\the\bmb@temp}{-3bp}}
-			\pgfpathcurveto%
-			{\pgfpoint{\the\bmb@dima}{-3bp}}%
-			{\pgfpoint{\the\bmb@dimb}{-1.2bp}}%
-			{\pgfpoint{\the\bmb@dimb}{1bp}}%
-			{
-				\bmb@dima=\ht\bmb@box%
-				\pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-				\pgfpathlineto{\pgfpoint{-4bp}{\bmb@dima}}
-				\pgfusepath{fill}
-			}
-			\ifbmb@shadow%
-			{
-				\color{black!50!bg}
-				\pgfsetlinewidth{0pt}
-				\pgfpathmoveto{\pgfpoint{\bmb@dimb}{-.5bp}}
-				\bmb@dima=\ht\bmb@box%
-				\advance\bmb@dima by\bmb@prevheight%
-				\advance\bmb@dima by 1bp%
-				\pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-				\pgfusepath{stroke}
-				\bmb@temp=\bmb@dima
-				\advance\bmb@dima by 1bp%
-				\color{black!31!bg}
-				\pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-				\pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-				\pgfusepath{stroke}
-				\advance\bmb@dima by 1bp%
-				\advance\bmb@temp by 1bp%
-				\color{black!19!bg}
-				\pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-				\pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-				\pgfusepath{stroke}
-				\advance\bmb@dima by 1bp%
-				\advance\bmb@temp by 1bp%
-				\color{black!6!bg}
-				\pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-				\pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-				\pgfusepath{stroke}
-				\advance\bmb@dima by 1.5bp%
-				\advance\bmb@temp by 1bp%
-				\color{bg}
-				\pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-				\pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-				\pgfusepath{stroke}
-			}
-			\fi
-		\end{pgfpicture}%
-		\box\bmb@box%
-	}%
-	\ifbmb@shadow%
-	\vskip4bp minus 2bp%
-	\else%
-	\vskip2bp%
-	\fi%
-	\egroup% of \vbox\bgroup
-}
+
+ \bbl@sreplace\endbeamerboxesrounded{\hbox}%
+          {\hbox dir TLT}%
 
 
 %% beamerbaseauxtemplates

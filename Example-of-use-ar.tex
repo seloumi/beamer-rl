@@ -1,6 +1,8 @@
-\documentclass[arabic,babel={layout=lists}]{beamer-rl}
+\documentclass[arabic,babel={layout=lists.counters}]{beamer-rl}
 \usepackage{hologo} % pdflatex, xelatex, lualatex logos 
 \usepackage{listings}
+
+\usepackage{tikz}
 
 \babelprovide[import=ar-DZ, main]{arabic}
 \babelfont{alm}[Script=Arabic,Scale=.88]{ALM Fixed}
@@ -72,6 +74,10 @@
 \smallskip
 %\end{verbatim}
 }
+
+
+\fboxsep=0pt            
+\parindent=0pt
 
 
 \begin{document}
@@ -361,6 +367,7 @@ number not in the first $p$ numbers.\qedhere
 \end{frame}
 
 \subsection{التكبير}
+
 
 \begin{frame}[fragile]
 \frametitle{التكبير}
