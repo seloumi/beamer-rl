@@ -243,7 +243,7 @@
 }
 
 \def\insertgotosymbol{%
-	\begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+\begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
 		\pgfuseobject{\ifcase\bbl@thepardir beamergotosymbol\else beamerreturnsymbol\fi}%
 \end{pgfpicture}}
 
@@ -256,7 +256,7 @@
 }
 
 \def\insertreturnsymbol{%
-	\begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+\begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
 		\pgfuseobject{\ifcase\bbl@thepardir beamerreturnsymbol\else beamergotosymbol\fi}%
 \end{pgfpicture}}
 
@@ -284,7 +284,7 @@
 }
 
 \def\insertskipsymbol{%
-	\begin{pgfpicture}{-1pt}{0pt}{6pt}{5pt}
+\begin{pgfpicture}{-1pt}{0pt}{6pt}{5pt}
 		\pgfuseobject{\ifcase\bbl@thepardir beamerskipsymbol\else beamerskipsymbolrl\fi}%
 \end{pgfpicture}}
 
@@ -362,16 +362,17 @@
       \dp\@tempboxa=0pt%
       \setbox\beamer@framebox=\vbox to\beamer@frametextheight{{%
           \ifbeamer@plainframe\beamer@leftmargin=\Gm@lmargin\fi%
+          \ifcase\bbl@thepardir \else\multiply\@tempdimb by -1\relax\fi%
           \begin{oldpgfpicture}{\beamer@leftmargin}{-\beamer@frametextheight}{\beamer@leftmargin}{0pt}
-            \pgftext[left,top]{\box\@tempboxa}
-            \pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\ifcase\bbl@thepardir +\else-\fi\@tempdimb}{\@tempdimc}}%
+           \pgftext[left,top]{\box\@tempboxa}
+            \pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\@tempdimb}{\@tempdimc}}%
             \pgfusepath{clip}
             \begingroup
-              \pgftransformscale{\beamer@temp}
+            \pgftransformscale{\beamer@temp}
               \@tempdima=#4\relax%
               \@tempdimb=#5\relax%
               {\pgftransformshift{\pgfpoint{-\@tempdima}{\@tempdimb}}%
-              \pgftext[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox}}}
+              \pgftext[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox }}}
             \endgroup
           \end{oldpgfpicture}%
         }}%
@@ -394,31 +395,9 @@
 % Shrink stuff
 %
 
-\def\beamer@shrinkframebox{%
-  \@tempdima=\ht\beamer@framebox%
-%  \ifdim\@tempdima>\beamer@frametextheight%
-    \@tempcnta=\@tempdima%
-    \divide\@tempcnta by 65536\relax%
-    \@tempdimc=\beamer@frametextheight%
-    \divide\@tempdimc by\@tempcnta\relax%
-    \ifdim\@tempdimc>\beamer@shrinkfactor pt%
-      \@tempdimc=\beamer@shrinkfactor pt%
-    \else%
-      \@tempdima=-100\@tempdimc%
-      \advance\@tempdima by100pt%
-      \ClassWarning{beamer}{Frame text is shrunk by a factor of %
-      \strip@pt\@tempdima\space percent instead of
-      \beamer@shrinkpercentage\space percent}%
-    \fi%
-    \edef\beamer@factortemp{\strip@pt\@tempdimc}%
-    \setbox\beamer@framebox=\vbox to\beamer@frametextheight{%
-      \begin{oldpgfpicture}{0pt}{-\beamer@frametextheight}{0pt}{0pt}
-        {\pgftransformscale{\beamer@factortemp}%
-          \pgftext[left,top]{\box\beamer@framebox}}%
-      \end{oldpgfpicture}%
-    }%
-%  \fi%
-}
+
+ \bbl@sreplace\beamer@shrinkframebox{\vbox}%
+          {\vbox dir TLT}%
 
 % Temporary workaround for issue of \shapemode bug 
 % https://github.com/latex3/babel/issues/13
