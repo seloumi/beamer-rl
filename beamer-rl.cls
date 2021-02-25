@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{beamer-rl}
-[2020/08/04 v1.4a  LaTeX class to patch beamer for right to left presentation with babel]
+[2020/02/25 v1.4b  LaTeX class to patch beamer for right to left presentation with babel]
 
 \RequirePackage{kvoptions}
 \RequirePackage{kvsetkeys}
@@ -115,7 +115,7 @@
 	\bmb@temp=\bmb@width%
 	\bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
 	\bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
-    \hbox dir TLT{%
+    \hbox {%
 		\begin{pgfpicture}{0bp}{+-\ht\bmb@box}{\bmb@dimc}{+-\ht\bmb@box}
 			\ifdim\wd\bmb@box=0pt%
 			\color{lower.bg}%
@@ -153,11 +153,6 @@
 	\nointerlineskip%
 	\vskip-0.5pt%
 	\fi%
-	\ifbmb@shadow%
-	\setbox\bmb@boxshadow=\hbox{\pgfuseshading{bmb@shadow}}%
-	\setbox\bmb@boxshadowball=\hbox{\pgfuseshading{bmb@shadowball}}%
-	\setbox\bmb@boxshadowballlarge=\hbox{\pgfuseshading{bmb@shadowballlarge}}%
-	\fi%
 	\setbox\bmb@colorbox=\hbox{{\pgfpicturetrue\pgfsetcolor{lower.bg}}}%
 	\setbox\bmb@box=\hbox\bgroup\begin{minipage}[b]{\bmb@width}%
 		\vskip2pt%
@@ -167,8 +162,9 @@
 		%\color{.}%
 	}
 
- \bbl@sreplace\endbeamerboxesrounded{\hbox}%
-          {\hbox dir TLT}%
+\bbl@sreplace\endbeamerboxesrounded{\begin{pgfpicture}}%
+          {\textdir TLT\begin{pgfpicture}}%
+
 
 
 %% beamerbaseauxtemplates
