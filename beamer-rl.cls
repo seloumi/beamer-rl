@@ -115,7 +115,7 @@
 	\bmb@temp=\bmb@width%
 	\bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
 	\bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
-    \hbox {%
+    \hbox dir TLT {%
 		\begin{pgfpicture}{0bp}{+-\ht\bmb@box}{\bmb@dimc}{+-\ht\bmb@box}
 			\ifdim\wd\bmb@box=0pt%
 			\color{lower.bg}%
