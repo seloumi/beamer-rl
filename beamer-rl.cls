@@ -423,6 +423,8 @@
 % Temporary workaround to fix bug luatex 1.13.2  (hyperlink in RTL context)
 % https://tex.stackexchange.com/questions/592022/issue-in-width-of-hyperlink-box-in-vbox-rtl-context
 
-\AddToHook{shipout/background}{ \pdfextension setmatrix{1 0 0 1}}
+\ifdefined\AddToHook
+\AddToHook{shipout/background}{\pdfextension setmatrix{1 0 0 1}}
+\fi
 
 \endinput
