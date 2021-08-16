@@ -1,3 +1,6 @@
+% The package will be deleted if TRT pagedir is supported by  package pgfpages
+% https://github.com/pgf-tikz/pgf/issues/911
+
 \ProvidesPackage{pgfpages-rl}[2021/08/15 ver 1 adapt pgfpages for TRT pagedir (lualatex)]
 
 \RequirePackage{pgfpages,ifluatex}
@@ -6,6 +9,19 @@
 \else
 \PackageError{pgfpages-rl}{pgfpages-rl require lualatex}
 \fi
+
+
+\def\pgfpagespoint{\pgfpages@test@pagedir\pgfpagespoint}
+
+\def\pgfpages@test@pagedir{%
+  \let\pgfpagespoint\pgfpoint
+    \ifcase\pagedirection
+        % 0, TLT (latin)
+    \or % 1, TRT (arabic)
+      \def\pgfpagespoint##1##2{\pgfpoint{##1}{##2}\pgf@x=-\pgf@x}%
+    \fi
+  }
+
 
 \renewcommand\pgfpagesdeclarelayout[3]{%
   \expandafter\let\csname pgfpages@layoutbefore@#1\endcsname\relax
@@ -16,32 +32,52 @@
 
 \define@key{pgfpagesuselayoutoption}{second right}[]%
 {%
-  \def\pgfpageoptionfirstcenter{\pgfpoint{-1.5\paperwidth}{.5\paperheight}}% <--
-  \def\pgfpageoptionsecondcenter{\pgfpoint{-.5\paperwidth}{.5\paperheight}}% <--
+  \def\pgfpageoptionfirstcenter{%
+  \ifcase\pagedirection
+  \pgfpoint{.5\paperwidth}{.5\paperheight}% 
+  \or
+  \pgfpoint{-1.5\paperwidth}{.5\paperheight}% 
+  \fi}
+  \def\pgfpageoptionsecondcenter{%
+  \ifcase\pagedirection
+  \pgfpoint{1.5\paperwidth}{.5\paperheight}% 
+  \or
+  \pgfpoint{-.5\paperwidth}{.5\paperheight}% 
+  \fi}
   \def\pgfpageoptiontwoheight{\paperheight}%
   \def\pgfpageoptiontwowidth{2\paperwidth}%
 }
 
 \define@key{pgfpagesuselayoutoption}{second left}[]%
 {%
-  \def\pgfpageoptionfirstcenter{\pgfpoint{-.5\paperwidth}{.5\paperheight}}% <--
-  \def\pgfpageoptionsecondcenter{\pgfpoint{-1.5\paperwidth}{.5\paperheight}}% <--
+  \def\pgfpageoptionfirstcenter{%
+  \ifcase\pagedirection
+  \pgfpoint{1.5\paperwidth}{.5\paperheight}% 
+  \or
+  \pgfpoint{-.5\paperwidth}{.5\paperheight}% 
+  \fi}
+  \def\pgfpageoptionsecondcenter{%
+  \ifcase\pagedirection
+  \pgfpoint{.5\paperwidth}{.5\paperheight}% 
+  \or
+  \pgfpoint{-1.5\paperwidth}{.5\paperheight}% 
+  \fi}
   \def\pgfpageoptiontwoheight{\paperheight}%
   \def\pgfpageoptiontwowidth{2\paperwidth}%
 }
 
 \define@key{pgfpagesuselayoutoption}{second top}[]%
 {%
-  \def\pgfpageoptionfirstcenter{\pgfpoint{-.5\paperwidth}{.5\paperheight}}%
-  \def\pgfpageoptionsecondcenter{\pgfpoint{-.5\paperwidth}{1.5\paperheight}}%
+  \def\pgfpageoptionfirstcenter{\pgfpagespoint{.5\paperwidth}{.5\paperheight}}%
+  \def\pgfpageoptionsecondcenter{\pgfpagespoint{.5\paperwidth}{1.5\paperheight}}%
   \def\pgfpageoptiontwoheight{2\paperheight}%
   \def\pgfpageoptiontwowidth{\paperwidth}%
 }
 
 \define@key{pgfpagesuselayoutoption}{second bottom}[]%
 {%
-  \def\pgfpageoptionfirstcenter{\pgfpoint{-.5\paperwidth}{1.5\paperheight}}%
-  \def\pgfpageoptionsecondcenter{\pgfpoint{-.5\paperwidth}{.5\paperheight}}%
+  \def\pgfpageoptionfirstcenter{\pgfpagespoint{.5\paperwidth}{1.5\paperheight}}%
+  \def\pgfpageoptionsecondcenter{\pgfpagespoint{.5\paperwidth}{.5\paperheight}}%
   \def\pgfpageoptiontwoheight{2\paperheight}%
   \def\pgfpageoptiontwowidth{\paperwidth}%
 }
@@ -57,7 +93,7 @@
   }
   \pgfpageslogicalpageoptions{1}
   {%
-    center=\pgfpoint{-.5\pgfphysicalwidth}{.5\pgfphysicalheight},%
+    center=\pgfpagespoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight},%
     corner width=\pgfpageoptioncornerwidth%
   }%
 }
@@ -78,7 +114,7 @@
     resized width=\pgfphysicalwidth,%
     resized height=\pgfphysicalheight,%
     border shrink=\pgfpageoptionborder,%
-    center=\pgfpoint{-.5\pgfphysicalwidth}{.5\pgfphysicalheight}%
+    center=\pgfpagespoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight}%
   }%
 }
 
@@ -104,14 +140,14 @@
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=\pgfphysicalheight,%
-      center=\pgfpoint{-.25\pgfphysicalwidth}{.5\pgfphysicalheight}%
+      center=\pgfpagespoint{.25\pgfphysicalwidth}{.5\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{2}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=\pgfphysicalheight,%
-      center=\pgfpoint{-.75\pgfphysicalwidth}{.5\pgfphysicalheight}%
+      center=\pgfpagespoint{.75\pgfphysicalwidth}{.5\pgfphysicalheight}%
     }%
   \else
     % stack on top of one another
@@ -120,14 +156,14 @@
       border shrink=\pgfpageoptionborder,%
       resized width=\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.5\pgfphysicalwidth}{.75\pgfphysicalheight}%
+      center=\pgfpagespoint{.5\pgfphysicalwidth}{.75\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{2}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.5\pgfphysicalwidth}{.25\pgfphysicalheight}%
+      center=\pgfpagespoint{.5\pgfphysicalwidth}{.25\pgfphysicalheight}%
     }%
   \fi    
 }
@@ -150,28 +186,28 @@
     border shrink=\pgfpageoptionborder,%
     resized width=.5\pgfphysicalwidth,%
     resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{-.25\pgfphysicalwidth}{.75\pgfphysicalheight}%
+    center=\pgfpagespoint{.25\pgfphysicalwidth}{.75\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{2}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.5\pgfphysicalwidth,%
     resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{-.75\pgfphysicalwidth}{.75\pgfphysicalheight}%
+    center=\pgfpagespoint{.75\pgfphysicalwidth}{.75\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{3}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.5\pgfphysicalwidth,%
     resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{-.25\pgfphysicalwidth}{.25\pgfphysicalheight}%
+    center=\pgfpagespoint{.25\pgfphysicalwidth}{.25\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{4}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.5\pgfphysicalwidth,%
     resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{-.75\pgfphysicalwidth}{.25\pgfphysicalheight}%
+    center=\pgfpagespoint{.75\pgfphysicalwidth}{.25\pgfphysicalheight}%
   }%
 }
 
@@ -195,42 +231,42 @@
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.167\pgfphysicalwidth}{.75\pgfphysicalheight}%
+      center=\pgfpagespoint{.167\pgfphysicalwidth}{.75\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{2}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.5\pgfphysicalwidth}{.75\pgfphysicalheight}%
+      center=\pgfpagespoint{.5\pgfphysicalwidth}{.75\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{3}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.833\pgfphysicalwidth}{.75\pgfphysicalheight}%
+      center=\pgfpagespoint{.833\pgfphysicalwidth}{.75\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{4}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.167\pgfphysicalwidth}{.25\pgfphysicalheight}%
+      center=\pgfpagespoint{.167\pgfphysicalwidth}{.25\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{5}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.5\pgfphysicalwidth}{.25\pgfphysicalheight}%
+      center=\pgfpagespoint{.5\pgfphysicalwidth}{.25\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{6}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.833\pgfphysicalwidth}{.25\pgfphysicalheight}%
+      center=\pgfpagespoint{.833\pgfphysicalwidth}{.25\pgfphysicalheight}%
     }%
   \else
     % stack on top of one another
@@ -239,42 +275,42 @@
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.25\pgfphysicalwidth}{.833\pgfphysicalheight}%
+      center=\pgfpagespoint{.25\pgfphysicalwidth}{.833\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{2}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.75\pgfphysicalwidth}{.833\pgfphysicalheight}%
+      center=\pgfpagespoint{.75\pgfphysicalwidth}{.833\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{3}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.25\pgfphysicalwidth}{.5\pgfphysicalheight}%
+      center=\pgfpagespoint{.25\pgfphysicalwidth}{.5\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{4}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.75\pgfphysicalwidth}{.5\pgfphysicalheight}%
+      center=\pgfpagespoint{.75\pgfphysicalwidth}{.5\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{5}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.25\pgfphysicalwidth}{.167\pgfphysicalheight}%
+      center=\pgfpagespoint{.25\pgfphysicalwidth}{.167\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{6}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.75\pgfphysicalwidth}{.167\pgfphysicalheight}%
+      center=\pgfpagespoint{.75\pgfphysicalwidth}{.167\pgfphysicalheight}%
     }%
   \fi    
 }
@@ -299,56 +335,56 @@
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.125\pgfphysicalwidth}{.75\pgfphysicalheight}%
+      center=\pgfpagespoint{.125\pgfphysicalwidth}{.75\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{2}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.375\pgfphysicalwidth}{.75\pgfphysicalheight}%
+      center=\pgfpagespoint{.375\pgfphysicalwidth}{.75\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{3}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.625\pgfphysicalwidth}{.75\pgfphysicalheight}%
+      center=\pgfpagespoint{.625\pgfphysicalwidth}{.75\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{4}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.875\pgfphysicalwidth}{.75\pgfphysicalheight}%
+      center=\pgfpagespoint{.875\pgfphysicalwidth}{.75\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{5}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.125\pgfphysicalwidth}{.25\pgfphysicalheight}%
+      center=\pgfpagespoint{.125\pgfphysicalwidth}{.25\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{6}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.375\pgfphysicalwidth}{.25\pgfphysicalheight}%
+      center=\pgfpagespoint{.375\pgfphysicalwidth}{.25\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{7}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.625\pgfphysicalwidth}{.25\pgfphysicalheight}%
+      center=\pgfpagespoint{.625\pgfphysicalwidth}{.25\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{8}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.25\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{-.875\pgfphysicalwidth}{.25\pgfphysicalheight}%
+      center=\pgfpagespoint{.875\pgfphysicalwidth}{.25\pgfphysicalheight}%
     }%
   \else
     % stack on top of one another
@@ -357,56 +393,56 @@
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.25\pgfphysicalwidth}{.875\pgfphysicalheight}%
+      center=\pgfpagespoint{.25\pgfphysicalwidth}{.875\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{2}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.75\pgfphysicalwidth}{.875\pgfphysicalheight}%
+      center=\pgfpagespoint{.75\pgfphysicalwidth}{.875\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{3}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.25\pgfphysicalwidth}{.625\pgfphysicalheight}%
+      center=\pgfpagespoint{.25\pgfphysicalwidth}{.625\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{4}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.75\pgfphysicalwidth}{.625\pgfphysicalheight}%
+      center=\pgfpagespoint{.75\pgfphysicalwidth}{.625\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{5}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.25\pgfphysicalwidth}{.375\pgfphysicalheight}%
+      center=\pgfpagespoint{.25\pgfphysicalwidth}{.375\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{6}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.75\pgfphysicalwidth}{.375\pgfphysicalheight}%
+      center=\pgfpagespoint{.75\pgfphysicalwidth}{.375\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{7}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.25\pgfphysicalwidth}{.125\pgfphysicalheight}%
+      center=\pgfpagespoint{.25\pgfphysicalwidth}{.125\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{8}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=.25\pgfphysicalheight,%
-      center=\pgfpoint{-.75\pgfphysicalwidth}{.125\pgfphysicalheight}%
+      center=\pgfpagespoint{.75\pgfphysicalwidth}{.125\pgfphysicalheight}%
     }%
   \fi    
 }
@@ -429,112 +465,112 @@
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.125\pgfphysicalwidth}{.875\pgfphysicalheight}%
+    center=\pgfpagespoint{.125\pgfphysicalwidth}{.875\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{2}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.375\pgfphysicalwidth}{.875\pgfphysicalheight}%
+    center=\pgfpagespoint{.375\pgfphysicalwidth}{.875\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{3}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.625\pgfphysicalwidth}{.875\pgfphysicalheight}%
+    center=\pgfpagespoint{.625\pgfphysicalwidth}{.875\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{4}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.875\pgfphysicalwidth}{.875\pgfphysicalheight}%
+    center=\pgfpagespoint{.875\pgfphysicalwidth}{.875\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{5}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.125\pgfphysicalwidth}{.625\pgfphysicalheight}%
+    center=\pgfpagespoint{.125\pgfphysicalwidth}{.625\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{6}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.375\pgfphysicalwidth}{.625\pgfphysicalheight}%
+    center=\pgfpagespoint{.375\pgfphysicalwidth}{.625\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{7}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.625\pgfphysicalwidth}{.625\pgfphysicalheight}%
+    center=\pgfpagespoint{.625\pgfphysicalwidth}{.625\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{8}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.875\pgfphysicalwidth}{.625\pgfphysicalheight}%
+    center=\pgfpagespoint{.875\pgfphysicalwidth}{.625\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{9}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.125\pgfphysicalwidth}{.375\pgfphysicalheight}%
+    center=\pgfpagespoint{.125\pgfphysicalwidth}{.375\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{10}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.375\pgfphysicalwidth}{.375\pgfphysicalheight}%
+    center=\pgfpagespoint{.375\pgfphysicalwidth}{.375\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{11}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.625\pgfphysicalwidth}{.375\pgfphysicalheight}%
+    center=\pgfpagespoint{.625\pgfphysicalwidth}{.375\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{12}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.875\pgfphysicalwidth}{.375\pgfphysicalheight}%
+    center=\pgfpagespoint{.875\pgfphysicalwidth}{.375\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{13}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.125\pgfphysicalwidth}{.125\pgfphysicalheight}%
+    center=\pgfpagespoint{.125\pgfphysicalwidth}{.125\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{14}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.375\pgfphysicalwidth}{.125\pgfphysicalheight}%
+    center=\pgfpagespoint{.375\pgfphysicalwidth}{.125\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{15}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.625\pgfphysicalwidth}{.125\pgfphysicalheight}%
+    center=\pgfpagespoint{.625\pgfphysicalwidth}{.125\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{16}
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{-.875\pgfphysicalwidth}{.125\pgfphysicalheight}%
+    center=\pgfpagespoint{.875\pgfphysicalwidth}{.125\pgfphysicalheight}%
   }%
 }
 
@@ -578,19 +614,22 @@
         \fi%
         \pgfutil@tempdima=\csname pgfpages@p@\the\pgf@cpn @width\endcsname\relax%
         \pgfutil@tempdimb=\csname pgfpages@p@\the\pgf@cpn @height\endcsname\relax%
-        \pgflowlevel{\pgftransformshift{\pgfpoint{.5\pgfutil@tempdima}{-.5\pgfutil@tempdimb}}}%
+        \pgflowlevel{\pgftransformshift{\pgfpagespoint{-.5\pgfutil@tempdima}{-.5\pgfutil@tempdimb}}}%
         \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @bordercode\endcsname\relax%
         \else%
           \pgfpathmoveto{\pgfpointorigin}%
-          \pgfpathlineto{\pgfpoint{-\wd0}{0pt}}%
-          \pgfpathlineto{\pgfpoint{-\wd0}{\ht0}}%
+          \pgfpathlineto{\pgfpagespoint{\wd0}{0pt}}%
+          \pgfpathlineto{\pgfpagespoint{\wd0}{\ht0}}%
           \pgfpathlineto{\pgfpoint{0pt}{\ht0}}%
           \pgfpathclose%
           {\csname pgfpages@p@\the\pgf@cpn @bordercode\endcsname}%
         \fi%
         \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @cornerwidth\endcsname\relax%
         \else%
-          {\pgftransformcm{-1}{0}{0}{1}{\pgfpointorigin}
+          {\ifcase\pagedirection
+          \or%
+          \pgftransformcm{-1}{0}{0}{1}{\pgfpointorigin}%
+          \fi%
             \expandafter\pgfutil@tempdima\csname pgfpages@p@\the\pgf@cpn @cornerwidth\endcsname\relax%
             \color{black}
             \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\pgfutil@tempdima}{\pgfutil@tempdima}}%
