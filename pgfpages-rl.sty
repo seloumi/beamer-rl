@@ -2,14 +2,6 @@
 
 \RequirePackage{pgfpages,ifluatex}
 
-\def\@directioncoef{%
-\ifnum \thepagedirection=1 
--1*%
-\fi}
-
-
-
-
 \ifluatex
 \else
 \PackageError{pgfpages-rl}{pgfpages-rl require lualatex}
@@ -112,14 +104,14 @@
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=\pgfphysicalheight,%
-      center=\pgfpoint{\@directioncoef.25\pgfphysicalwidth}{.5\pgfphysicalheight}%
+      center=\pgfpoint{-.25\pgfphysicalwidth}{.5\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{2}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=.5\pgfphysicalwidth,%
       resized height=\pgfphysicalheight,%
-      center=\pgfpoint{\@directioncoef.75\pgfphysicalwidth}{.5\pgfphysicalheight}%
+      center=\pgfpoint{-.75\pgfphysicalwidth}{.5\pgfphysicalheight}%
     }%
   \else
     % stack on top of one another
@@ -128,14 +120,14 @@
       border shrink=\pgfpageoptionborder,%
       resized width=\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{\@directioncoef.5\pgfphysicalwidth}{.75\pgfphysicalheight}%
+      center=\pgfpoint{-.5\pgfphysicalwidth}{.75\pgfphysicalheight}%
     }%
     \pgfpageslogicalpageoptions{2}
     {%
       border shrink=\pgfpageoptionborder,%
       resized width=\pgfphysicalwidth,%
       resized height=.5\pgfphysicalheight,%
-      center=\pgfpoint{\@directioncoef.5\pgfphysicalwidth}{.25\pgfphysicalheight}%
+      center=\pgfpoint{-.5\pgfphysicalwidth}{.25\pgfphysicalheight}%
     }%
   \fi    
 }
@@ -586,7 +578,7 @@
         \fi%
         \pgfutil@tempdima=\csname pgfpages@p@\the\pgf@cpn @width\endcsname\relax%
         \pgfutil@tempdimb=\csname pgfpages@p@\the\pgf@cpn @height\endcsname\relax%
-        \pgflowlevel{\pgftransformshift{\pgfpoint{\@directioncoef -.5\pgfutil@tempdima}{-.5\pgfutil@tempdimb}}}%
+        \pgflowlevel{\pgftransformshift{\pgfpoint{.5\pgfutil@tempdima}{-.5\pgfutil@tempdimb}}}%
         \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @bordercode\endcsname\relax%
         \else%
           \pgfpathmoveto{\pgfpointorigin}%
