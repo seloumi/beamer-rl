@@ -193,6 +193,30 @@ package to insert a left to right text within your right to left text, e.g if yo
 
 \end{frame}
 
+\section{pgfpages-rl package}
+
+\begin{frame}[fragile]
+\frametitle{pgfpages-rl package}
+
+\verb:pgfpages-rl: adds to \verb:pgfpages: the ability to support TRT pagedir, the package requires \hologo{LuaLaTeX} engine. 
+It can also be used with other document classes besides \verb:beamer-rl: 
+
+\begin{codeblock}
+\documentclass{beamer-rl}
+\babelprovide[import=ar-DZ, main]{arabic}
+\usetheme{Warsaw}
+\usepackage{pgfpages-rl} % adapt pgfpages to TRT pagedir
+\setbeamertemplate{note page}[]
+\setbeameroption{show notes on second screen=right}
+\begin{document}
+...
+\end{document}
+
+\end{codeblock}
+
+
+\end{frame}
+
 \section{Examples}
 
 \begin{frame}[plain]{}

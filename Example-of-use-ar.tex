@@ -206,6 +206,35 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 
 \end{frame}
 
+\section{الحزمة pgfpages-rl}
+
+\begin{frame}[fragile]
+\frametitle{الحزمة pgfpages-rl}
+الحزمة pgfpages-rl تضيف الى الحزمة pgfpages القدرة على دعم الصفحات من اليمين الى اليسار 
+ (\verb:pagedir TRT:) 
+ تتطلب المعالجة باستعمال 
+\hologo{LuaLaTeX} 
+
+يمكن استعمالها أيضا مع الفئات الأخرى عدا عن الفئة 
+\verb:beamer-rl:
+
+\begin{codeblock}
+\documentclass{beamer-rl}
+\babelprovide[import=ar-DZ, main]{arabic}
+\usetheme{Warsaw}
+\usepackage{pgfpages-rl} % adapt pgfpages to TRT pagedir
+\setbeamertemplate{note page}[]
+\setbeameroption{show notes on second screen=right}
+\begin{document}
+...
+\end{document}
+
+\end{codeblock}
+
+
+\end{frame}
+
+
 \section{أمثلة}
 
 \begin{frame}[plain]{}
