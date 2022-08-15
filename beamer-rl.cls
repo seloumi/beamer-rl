@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{beamer-rl}
-[2021/08/16 v1.5  LaTeX class to patch beamer for right to left presentation with babel]
+[2022/06/19 v1.6  LaTeX class to patch beamer for right to left presentation with babel]
 
 \RequirePackage{kvoptions}
 \RequirePackage{kvsetkeys}
@@ -418,13 +418,6 @@
 \ifx\sffont@rl\nullfont
 \else
 \babelfont{sf}{Amiri}
-\fi
-
-% Temporary workaround to fix bug luatex 1.13.2  (hyperlink in RTL context)
-% https://tex.stackexchange.com/questions/592022/issue-in-width-of-hyperlink-box-in-vbox-rtl-context
-
-\ifdefined\AddToHook
-\AddToHook{shipout/background}{\pdfextension setmatrix{1 0 0 1}}
 \fi
 
 \endinput
