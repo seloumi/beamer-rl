@@ -16,9 +16,20 @@
 	\PassOptionsToPackage{#1}{babel}%
 }
 
-\DeclareVoidOption{arabic}{%
+\define@key{beamer-rl}{arabic}{%
              %\PassOptionsToPackage{arabic}{translator}%
               \AtBeginDocument{\uselanguage{Arabic}\languagealias{arabic}{Arabic}}
+              \AddToHook{env/document/before}{\babelprovide[#1,main]{arabic}}
+}
+
+\define@key{beamer-rl}{persian}{%
+             %\PassOptionsToPackage{persian}{translator}%
+             \AddToHook{env/document/before}{\babelprovide[#1,main]{persian}}
+}
+
+\define@key{beamer-rl}{hebrew}{%
+             %\PassOptionsToPackage{hebrew}{translator}%
+             \AddToHook{env/document/before}{\babelprovide[#1,main]{hebrew}}
 }
 
 \DeclareDefaultOption{%
