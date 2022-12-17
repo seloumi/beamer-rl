@@ -512,9 +512,9 @@
 % 0 for TLT 1 for TRT 
 \oldframe}
 
-\redefbeamertemplate*{itemize/enumerate body begin}{default}{\ifnum\value{beginframepardir}=\bbl@getluadir{par} \else\shapemode=2\fi}
+\redefbeamertemplate*{itemize/enumerate body begin}{default}{\ifnum\value{beginframepardir}=\bbl@getluadir{par} \else\shapemode\tw@\fi}
 
-\redefbeamertemplate*{description body begin}{default}{\ifnum\value{beginframepardir}=\bbl@getluadir{par} \else\shapemode \tw@\fi}
+\redefbeamertemplate*{description body begin}{default}{\ifnum\value{beginframepardir}=\bbl@getluadir{par} \else\shapemode\tw@\fi}
 
 % Use Amiri as default sans serif font
 
