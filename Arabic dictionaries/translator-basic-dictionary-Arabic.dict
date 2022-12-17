@@ -6,43 +6,42 @@
 \providetranslation{Address}{عنوان}
 \providetranslation{address}{عنوان}
 \providetranslation{and}{و}
-\providetranslation{Appendix}{ملحق}
-\providetranslation{Authors}{المؤلفين}
-\providetranslation{authors}{المؤلفين}
+\providetranslation{Appendix}{الملاحق}
+\providetranslation{Authors}{المؤلفون}
+\providetranslation{authors}{المؤلفون}
 \providetranslation{Author}{المؤلف}
-\providetranslation{author}{المؤلف}
-\providetranslation{Bibliography}{مصادر}
+\providetranslation{author}{المؤلفون}
+\providetranslation{Bibliography}{المصادر}
 \providetranslation{cc}{نسخة لـ}
-\providetranslation{Chapters}{أبواب}
-\providetranslation{chapters}{أبواب}
-\providetranslation{Chapter}{باب}
-\providetranslation{chapter}{باب}
-\providetranslation{Conclusion}{نتيجة}
-\providetranslation{conclusion}{نتيجة}
+\providetranslation{Chapters}{الأبواب}
+\providetranslation{chapters}{الأبواب}
+\providetranslation{Chapter}{الباب}
+\providetranslation{chapter}{الباب}
+\providetranslation{Conclusion}{استنتاج}
+\providetranslation{conclusion}{استنتاج}
 \providetranslation{Contents}{المحتويات}
-\providetranslation{Continuation}{تابع}
-\providetranslation{continuation}{تابع}
-\providetranslation{cont}{تابع} % FIXME: unsure
-\providetranslation{encl (plural)}{}
-\providetranslation{encl (singular)}{}
-\providetranslation{encl}{}
-\providetranslation{Figures}{أشكال}
-\providetranslation{figures}{أشكال}
-\providetranslation{Figure}{شكل}
-\providetranslation{figure}{شكل}
+\providetranslation{Continuation}{التالي}
+\providetranslation{continuation}{التالي}
+\providetranslation{cont}{التالي} 
+\providetranslation{encl (plural)}{المرفقات}
+\providetranslation{encl (singular)}{المرفق}
+\providetranslation{encl}{المرفق}
+\providetranslation{Figures}{الأشكال}
+\providetranslation{figures}{الأشكال}
+\providetranslation{Figure}{الشكل}
+\providetranslation{figure}{الشكل}
 \providetranslation{From}{من}
 \providetranslation{from}{من}
-\providetranslation{From?}{من أين؟}
-\providetranslation{Glossary}{قاموس}
-\providetranslation{Index}{فهرس}
+\providetranslation{Glossary}{قائمة المصطلحات}
+\providetranslation{Index}{الفهرس}
 \providetranslation{Introduction}{مدخل}
 \providetranslation{introduction}{مدخل}
 \providetranslation{List of Figures and Tables}{قائمة الأشكال والجداول}
 \providetranslation{List of Figures}{قائمة الأشكال}
 \providetranslation{List of Tables}{قائمة الجداول}
 \providetranslation{or}{أو}
-\providetranslation{Outline}{الخطوط العريضة}
-\providetranslation{Overview}{نظرة عامة}
+\providetranslation{Outline}{الخطة}
+\providetranslation{Overview}{الملخص}
 \providetranslation{Pages}{صفحات}
 \providetranslation{pages}{صفحات}
 \providetranslation{Page}{صفحة}
@@ -51,41 +50,38 @@
 \providetranslation{paragraphs}{فقرات}
 \providetranslation{Paragraph}{فقرة}
 \providetranslation{paragraph}{فقرة}
-\providetranslation{Parts}{أقسام}
-\providetranslation{parts}{أقسام}
-\providetranslation{Part}{قسم}
-\providetranslation{part}{قسم}
-\providetranslation{Preface}{تمهيد}
+\providetranslation{Parts}{أجزاء}
+\providetranslation{parts}{أجزاء}
+\providetranslation{Part}{جزء}
+\providetranslation{part}{جزء}
+\providetranslation{Preface}{مدخل}
 \providetranslation{Proofs}{براهين}
 \providetranslation{proofs}{براهين}
 \providetranslation{Proof}{برهان}
 \providetranslation{proof}{برهان}
 \providetranslation{References}{مراجع}
-\providetranslation{Related work}{أعمال مرتبطة}
-\providetranslation{Related Work}{أعمال مرتبطة}
-\providetranslation{Sections}{فصول}
-\providetranslation{sections}{فصول}
-\providetranslation{Section}{فصل}
-\providetranslation{section}{فصل}
+\providetranslation{Related work}{الأعمال ذات الصلة}
+\providetranslation{Related Work}{الأعمال ذات الصلة}
+\providetranslation{Sections}{الفصول}
+\providetranslation{sections}{الفصول}
+\providetranslation{Section}{الفصل}
+\providetranslation{section}{الفصل}
 \providetranslation{See also}{أنظر أيضا}
 \providetranslation{see also}{أنظر أيضا}
 \providetranslation{See}{أنظر}
 \providetranslation{see}{أنظر}
-\providetranslation{Sketch of Proofs}{رسم البراهين}
-\providetranslation{Sketch of proofs}{رسم البراهين}
-\providetranslation{Sketch of Proof}{رسم البرهان}
-\providetranslation{Sketch of proof}{رسم البرهان}
-\providetranslation{Subsections}{فصول فرعية}
-\providetranslation{subsections}{فصول فرعية}
-\providetranslation{Subsection}{فصل فرعي}
-\providetranslation{subsection}{فصل فرعي}
-\providetranslation{Summary}{ملخص}
-\providetranslation{Tables}{جداول}
-\providetranslation{tables}{جداول}
-\providetranslation{Table}{جدول}
-\providetranslation{table}{جدول}
+\providetranslation{Sketch of Proofs}{رسم تخطيطي للبراهين}
+\providetranslation{Sketch of proofs}{رسم تخطيطي للبراهين}
+\providetranslation{Sketch of Proof}{رسم تخطيطي للبرهان}
+\providetranslation{Sketch of proof}{رسم تخطيطي للبرهان}
+\providetranslation{Subsections}{الفصول الفرعية}
+\providetranslation{subsections}{الفصول الفرعية}
+\providetranslation{Subsection}{الفصل الفرعي}
+\providetranslation{subsection}{الفصل الفرعي}
+\providetranslation{Summary}{الملخص}
+\providetranslation{Tables}{الجداول}
+\providetranslation{tables}{الجداول}
+\providetranslation{Table}{الجدول}
+\providetranslation{table}{الجدول}
 \providetranslation{To}{إلى}
 \providetranslation{to}{إلى}
-\providetranslation{When?}{متى?}
-\providetranslation{Who?}{من?}
- 

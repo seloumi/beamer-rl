@@ -58,16 +58,10 @@
 \providetranslation{Proof Sketches}{مخططات البرهان}
 \providetranslation{Proof sketches}{مخططات البرهان}
 \providetranslation{proof sketches}{مخططات البرهان}
-\providetranslation{Sketch of Proof}{Esquisse de preuve}
-\providetranslation{Sketch of Proofs}{Esquisse de preuves}
-\providetranslation{Sketch of proof}{Esquisse de preuve}
-\providetranslation{Sketch of proofs}{Esquisse de preuves}
-\providetranslation{sketch of proof}{esquisse de preuve}
-\providetranslation{sketch of proofs}{esquisse de preuves}
-\providetranslation{Propositions}{Propositions}
-\providetranslation{propositions}{propositions}
-\providetranslation{Proposition}{Proposition}
-\providetranslation{proposition}{proposition}
+\providetranslation{Propositions}{قضايا}
+\providetranslation{propositions}{قضايا}
+\providetranslation{Proposition}{قضية}
+\providetranslation{proposition}{قضية}
 \providetranslation{Remarks}{ملاحظات}
 \providetranslation{remarks}{ملاحظات}
 \providetranslation{Remark}{ملاحظة}
