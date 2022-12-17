@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{beamer-rl}
-[2022/06/19 v1.6  LaTeX class to patch beamer for right to left presentation with babel]
+[2022/12/17 v1.7  LaTeX class to patch beamer for right to left presentation with babel]
 
 \RequirePackage{kvoptions}
 \RequirePackage{kvsetkeys}
