@@ -370,7 +370,8 @@
 % (sub-)section in toc: subsections numbered
 
 \redefbeamertemplate{subsection in toc}{subsections numbered}
-{\leavevmode\leftskip=2em\rlap{\hskip-2em \inserttocsectionnumber\hbox{.}\inserttocsubsectionnumber}\inserttocsubsection\par}
+{\leavevmode\leftskip=2em\rlap{\hskip-2em \babelsublr{\inserttocsectionnumber}.\babelsublr{\inserttocsubsectionnumber}}\inserttocsubsection\par}
+
 
 
 %% beamerinnerthemedefault
