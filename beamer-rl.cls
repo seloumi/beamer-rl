@@ -113,9 +113,9 @@
      {\AddToHook{cmd/diagbox@pict/before}{\let\bbl@pictsetdir\@gobble}%
        \AddToHook{env/pgfpicture/begin}{\bbl@pictsetdir\@ne}%
         \bbl@add\pgfinterruptpicture{\bbl@pictresetdir}%
-        \bbl@add\pgfsys@beginpicture{\bbl@pictsetdir\z@}%
+        \bbl@add\pgfsys@beginpicture{\bbl@pictsetdir\@ne}%
       \ifx\tikzpicture\@undefined\else    
-        \AddToHook{env/tikzpicture/begin}{\bbl@pictsetdir\z@}%
+        \AddToHook{env/tikzpicture/begin}{\bbl@pictsetdir\tw@}%
         \bbl@add\tikz@atbegin@node{\bbl@pictresetdir}%
         \bbl@sreplace\tikz{\begingroup}{\begingroup\bbl@pictsetdir\tw@}%
       \fi
