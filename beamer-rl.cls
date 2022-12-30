@@ -2,41 +2,61 @@
 \ProvidesClass{beamer-rl}
 [2022/12/17 v1.7  LaTeX class to patch beamer for right to left presentation with babel]
 
-\RequirePackage{kvoptions}
-\RequirePackage{kvsetkeys}
+\DeclareKeys
+  {
+     layout  .code:n = \PassOptionsToPackage{layout=#1}{babel}
+    ,unknown .code:n = \PassOptionsToClass{\CurrentOption}{beamer}
+  }
 
-\SetupKeyvalOptions{
-	family=beamer-rl,
-	prefix=beamer-rl@,
-	setkeys=\kvsetkeys,
-}
+\DeclareKeys
+  {  
+     arabic  .code:n = 
+     \PassOptionsToPackage{arabic,provide=*}{babel}
+     \AddToHook{env/document/before}{
+     \babelprovide[#1]{arabic}
+     \uselanguage{Arabic}\languagealias{arabic}{Arabic}     
+     %\PassOptionsToPackage{arabic}{translator}
+     }, 
+     arabic .default:n =
+  }  
 
-% babel options:
-\define@key{beamer-rl}{babel}{%
-	\PassOptionsToPackage{#1}{babel}%
-}
+\DeclareKeys
+  {  
+     hebrew  .code:n = 
+     \PassOptionsToPackage{hebrew,provide=*}{babel}
+     \AddToHook{env/document/before}{
+     \babelprovide[#1]{hebrew}
+     %\PassOptionsToPackage{hebrew}{translator}
+     }, 
+     hebrew .default:n =
+  }  
 
-\define@key{beamer-rl}{arabic}{%
-             %\PassOptionsToPackage{arabic}{translator}%
-              \AtBeginDocument{\uselanguage{Arabic}\languagealias{arabic}{Arabic}}
-              \AddToHook{env/document/before}{\babelprovide[#1,main]{arabic}}
-}
+  
+\ExplSyntaxOn
+\clist_map_inline:nn {arabic-ma,arabic-tn,arabic-dz,arabic-eg,arabic-sa,arabic-iq,arabic-sy,arabic-lb,arabic-ps,arabic-jo}
+  {
+    \DeclareKeys
+      {
+        #1 .code:n    = 
+          \AddToHook{env/document/before}{\babelprovide[import,##1,main]{#1}
+          \uselanguage{Arabic}\languagealias{arabic}{Arabic}},     
+          %\PassOptionsToPackage{arabic}{translator},
+        #1 .default:n = 
+      }
+  }
 
-\define@key{beamer-rl}{persian}{%
-             %\PassOptionsToPackage{persian}{translator}%
-             \AddToHook{env/document/before}{\babelprovide[#1,main]{persian}}
-}
+\clist_map_inline:nn {syriac,persian,urdu,centralkurdish,kashmiri,mazanderani,northernkurdish-arab,malayalam,pashto,punjabi-arab,uyghur,uzbek-arab,yiddish}
+  {
+    \DeclareKeys
+      {
+        #1 .code:n    = 
+          \AddToHook{env/document/before}{\babelprovide[import,##1,main]{#1}},
+        #1 .default:n = 
+      }
+  }
+\ExplSyntaxOff
 
-\define@key{beamer-rl}{hebrew}{%
-             %\PassOptionsToPackage{hebrew}{translator}%
-             \AddToHook{env/document/before}{\babelprovide[#1,main]{hebrew}}
-}
-
-\DeclareDefaultOption{%
-	\PassOptionsToClass{\CurrentOption}{beamer}%
-}
-
-\ProcessKeyvalOptions*\relax
+\ProcessKeyOptions
 
 \RequirePackage{ifluatex}
 
