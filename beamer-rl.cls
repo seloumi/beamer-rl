@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{beamer-rl}
-[2022/12/17 v1.7  LaTeX class to patch beamer for right to left presentation with babel]
+[2023/01/02 v1.7  LaTeX class to patch beamer for right to left presentation with babel]
 
 \DeclareKeys
   {
@@ -72,7 +72,24 @@
 \let\oldpgfpicture\pgfpicture
 \let\endoldpgfpicture\endpgfpicture
 
- % add graphics layout by default
+\let\oldpgfsys@beginpicture\pgfsys@beginpicture
+
+\def\redefbeamertemplate{%
+	\@ifstar{\@defbeamertemplate}{\@@defbeamertemplate}%
+}
+
+\let\old@blacktriangleright\blacktriangleright
+\let\old@blacktriangleleft\blacktriangleleft
+
+\def\blacktriangleright{%
+	\ifcase\bbl@thepardir\old@blacktriangleright\else\old@blacktriangleleft\fi}
+\def\blacktriangleleft{%
+	\ifcase\bbl@thepardir\old@blacktriangleleft\else\old@blacktriangleright\fi}
+
+\let\oldpgfuseshading\pgfuseshading
+\def\pgfuseshading#1{\babelsublr{\oldpgfuseshading{#1}}}
+
+% add graphics layout by default
 
 \let\bbl@pictresetdir\relax
    \def\bbl@pictsetdir#1{%
@@ -155,25 +172,9 @@
       \fi
     } 
  
-
 \def\reset@temp#1#2{\expandafter\let\csname beamer@@tmpop@#1@#2\endcsname\relax}
 \def\@@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate{#1}{#2}}
 \def\@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate*{#1}{#2}}
-
-\def\redefbeamertemplate{%
-	\@ifstar{\@defbeamertemplate}{\@@defbeamertemplate}%
-}
-
-\let\old@blacktriangleright\blacktriangleright
-\let\old@blacktriangleleft\blacktriangleleft
-
-\def\blacktriangleright{%
-	\ifcase\bbl@thepardir \old@blacktriangleright\else\old@blacktriangleleft\fi}
-\def\blacktriangleleft{%
-	\ifcase\bbl@thepardir \old@blacktriangleleft\else\old@blacktriangleright\fi}
-
-\let\oldpgfuseshading\pgfuseshading
-\def\pgfuseshading#1{\babelsublr{\oldpgfuseshading{#1}}}
 
 %% beamerbasenotes
 
@@ -190,6 +191,7 @@
   \beamer@twoscreensnotestrue
   \beamer@notestrue
 }
+
 
 %% beamerbasebox 
 
@@ -397,9 +399,6 @@
   \fi
 }
 
-
-
-
 %% beamerbaseauxtemplates
 
 
@@ -407,7 +406,6 @@
 
 \redefbeamertemplate{subsection in toc}{subsections numbered}
 {\leavevmode\leftskip=2em\rlap{\hskip-2em \babelsublr{\inserttocsectionnumber}.\babelsublr{\inserttocsubsectionnumber}}\inserttocsubsection\par}
-
 
 
 %% beamerinnerthemedefault
@@ -527,124 +525,25 @@
 %
 % Zoom stuff
 %
+% The patch need improvement to cover all cases 
 
-\def\beamer@framezoom<#1><#2>[#3](#4,#5)(#6,#7){%
-  \par\nointerlineskip%
-  \global\beamer@slidehaszoomtrue%
-  \advance\beamer@zoomcount by1\relax%
-  \def\beamer@zoomborderwidth{0}%
-  \edef\beamer@labelzoomed{beamer@labelzoomed@\the\beamer@zoomframecount @\the\beamer@zoomcount}%
-  \setkeys{beamerzoom}{#3}%
-  \only<#1>{%
-    {\hypersetup{pdfhighlight={/P},pdfborder={0 0 \beamer@zoomborderwidth}}%
-    \global\setbox\@tempboxa=\vbox{\hyperlink{\beamer@labelzoomed}{\vbox to #7{\hbox
-          to#6{\hfil}\vfil}}}}%
-    \ht\@tempboxa=0pt%
-    \wd\@tempboxa=0pt%
-    \dp\@tempboxa=0pt%
-    \setbox\@tempboxa=\vbox{\moveright#4\hbox{\lower#5\vbox{\box\@tempboxa}}}%
-    \ht\@tempboxa=0pt%
-    \wd\@tempboxa=0pt%
-    \dp\@tempboxa=0pt%
-    \global\setbox\beamer@zoombox=\vbox to0pt{\unvbox\beamer@zoombox\box\@tempboxa}%
-  }%
-  \only<#2>{%
-    \@ifundefined{\beamer@labelzoomed}%
-    {%
-      \hypertarget{\beamer@labelzoomed}{}%
-      \expandafter\gdef\csname\beamer@labelzoomed\endcsname{}%
-    }{}%
-    \gdef\beamer@zoomer{%
-      % compute zoom factor
-      \@tempdima=\beamer@frametextheight%
-      \@tempdimb=#7\relax%
-      \@tempcnta=\@tempdimb%
-      \divide\@tempcnta by4096\relax%
-      \multiply\@tempdima by16\relax%
-      \divide\@tempdima by\@tempcnta%
-      \@tempdimb=\paperwidth%
-      \ifbeamer@plainframe%
-      \else%
-        \advance\@tempdimb by-\beamer@leftsidebar%
-        \advance\@tempdimb by-\beamer@rightsidebar\relax%
-      \fi%
-      \@tempdimc=#6\relax%
-      \@tempcntb=\@tempdimc%
-      \divide\@tempcntb by4096\relax%
-      \multiply\@tempdimb by16\relax%
-      \divide\@tempdimb by\@tempcntb%
-      \ifdim\@tempdimb<\@tempdima%
-        \@tempdima=\@tempdimb%
-      \fi%
-      \edef\beamer@temp{\strip@pt\@tempdima}%
-      \@tempdimc=\beamer@frametextheight%
-      \advance\@tempdimc by4pt%
-      \@tempdimb=\paperwidth%
-      \ifbeamer@plainframe%
-      \else%
-        \advance\@tempdimb by-\beamer@leftsidebar%
-        \advance\@tempdimb by-\beamer@rightsidebar\relax%
-      \fi%
-      \setbox\@tempboxa=\vbox{\hsize=\@tempdimb\Acrobatmenu{GoBack}{\vbox to
-          \beamer@frametextheight{\hbox to\@tempdimb{\hfil}\vfil}}}%
-      \ht\@tempboxa=0pt%
-      \wd\@tempboxa=0pt%
-      \dp\@tempboxa=0pt%
-      \setbox\beamer@framebox=\vbox to\beamer@frametextheight{{%
-          \ifbeamer@plainframe\beamer@leftmargin=\Gm@lmargin\fi%
-          \ifcase\bbl@thepardir \else\multiply\@tempdimb by -1\relax\fi%
-          \begin{oldpgfpicture}{\beamer@leftmargin}{-\beamer@frametextheight}{\beamer@leftmargin}{0pt}
-           \pgftext[left,top]{\box\@tempboxa}
-            \pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\@tempdimb}{\@tempdimc}}%
-            \pgfusepath{clip}
-            \begingroup
-            \pgftransformscale{\beamer@temp}
-              \@tempdima=#4\relax%
-              \@tempdimb=#5\relax%
-              {\pgftransformshift{\pgfpoint{-\@tempdima}{\@tempdimb}}%
-              \pgftext[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox }}}
-            \endgroup
-          \end{oldpgfpicture}%
-        }}%
-      \setbox\beamer@framebox=\vbox{%
-        \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
-        \nointerlineskip\unvbox\beamer@frametitlebox%
-        \nobreak%
-        \box\beamer@framebox%
-        \nobreak%
-        \vss%
-        \beamer@exitcode%
-      }%
-      \global\setbox\beamer@footins=\box\voidb@x% no footnotes in zoomed slides
-    }%
-  }%
-}
-
+\bbl@sreplace\beamer@framezoom{\begin{pgfpicture}}%
+{\ifcase\bbl@thepardir \else\multiply\@tempdimb by\m@ne\relax
+\let\pgfsys@beginpicture\oldpgfsys@beginpicture\fi%
+\begin{pgfpicture}}%
 
 %
 % Shrink stuff
 %
 
-
- \bbl@sreplace\beamer@shrinkframebox{\vbox}%
+\bbl@sreplace\beamer@shrinkframebox{\vbox}%
           {\vbox dir TLT}%
 
-% Temporary workaround for issue of \shapemode bug 
+% issue of \shapemode bug 
 % https://github.com/latex3/babel/issues/13
-% this work fine with lists inside frame, if they are included within \vbox
-% may be we need to insert \shapemode=2  or \shapemode=0 manualy  at beginning of list
+% we need to insert \shapemode=2  or \shapemode=0 manualy  at beginning of list
 % \begin{enumerate} \shapemode=.. &  \begin{itemize} \shapemode=..
 
-\newcounter{beginframepardir}
-
-\let\oldframe\frame
-\def\frame{\setcounter{beginframepardir}{\bbl@getluadir{par}}
-% 0 for TLT 1 for TRT 
-\oldframe}
-
-\redefbeamertemplate*{itemize/enumerate body begin}{default}{\ifnum\value{beginframepardir}=\bbl@getluadir{par} \else\shapemode\tw@\fi}
-
-\redefbeamertemplate*{description body begin}{default}{\ifnum\value{beginframepardir}=\bbl@getluadir{par} \else\shapemode\tw@\fi}
 
 % Use Amiri as default sans serif font
 

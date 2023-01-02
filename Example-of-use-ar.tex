@@ -1,10 +1,8 @@
-\documentclass[arabic,babel={layout=lists.counters}]{beamer-rl}
+\documentclass[arabic-dz]{beamer-rl}
 \usepackage{hologo} % pdflatex, xelatex, lualatex logos 
 \usepackage{listings}
+\usepackage{multicol}
 
-\usepackage{tikz}
-
-\babelprovide[import=ar-DZ, main]{arabic}
 \babelfont{alm}[Script=Arabic,Scale=.88]{ALM Fixed}
 
 % Themes without Navigation Bars
@@ -94,7 +92,8 @@
 \begin{frame}[fragile]
 \frametitle{مدخل}
 انشاء عرض بيمر عربي (اتجاه النص من اليمين لليسار) اعتمادا على 
- \hologo{pdfLaTeX} أو \hologo{XeLaTeX} مازال يعترضه الكثير من المشاكل والمعوقات خاصة ما يتعلق بالألوان والروابط والتي لم يوجد لها حلولا~بعد. 
+ \hologo{pdfLaTeX} أو \hologo{XeLaTeX} 
+ مازال يعترضه الكثير من المشاكل والمعوقات خاصة ما يتعلق بالألوان والروابط والتي لم يوجد لها حلولا~بعد. 
 
 فريق  \hologo{LuaTeX} 
 أوجد حلولا لهذه المشاكل، الشكر لهم ولـ 
@@ -102,23 +101,21 @@
 لأعماله بالحزمة
 \verb|babel| وخصوصا الكتابة بالاتجاهين (\verb|bidi| writing)    
 
-هذه الفئة (class) تعدل في بعض اوامر وتعليمات beamer لغرض انشاء عروض من اليمين إلى اليسار (العربية على سبيل المثال)، الفئة تستدعي \verb|babel| مع الخيار 
-\verb|bidi=basic|
- والمعالجة تتطلب استخدام 
+هذه الفئة (class) تعدل في بعض اوامر وتعليمات beamer لغرض انشاء عروض من اليمين إلى اليسار (العربية على سبيل المثال)، الفئة تستدعي \verb|babel| ضمنيا مع الخيار \verb|bidi=basic| والمعالجة تتطلب استخدام 
 \hologo{LuaLaTeX} 
 
 \end{frame}
 
 \section{كيفية استعمال الفئة}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile,allowframebreaks]
 \frametitle{كيفية استعمال الفئة}
 
 \begin{codeblock}
 \documentclass{beamer-rl}
 
 % import languages
-\babelprovide[import=ar-DZ, main]{arabic} 
+\babelprovide[import, main]{arabic} 
 
 \usetheme{CambridgeUS}
 
@@ -127,6 +124,65 @@
 \end{document}
 \end{codeblock}
 
+نحصل على نتيجة مماثلة باضافة اللغة الأساسية للعرض 
+(لغة باتجاه كتابة من اليمين إلى اليسار)
+ ضمن خيار الفئة كما يلي:
+
+\begin{codeblock}
+\documentclass[arabic]{beamer-rl}
+
+\usetheme{CambridgeUS}
+
+\begin{document}
+...
+\end{document}
+\end{codeblock}
+
+يمكن أيضا إضافة خيارات أكثر للغة والتي توفرها التعليمة 
+{\textdir TLT \verb|\babelprovide|}
+كما يلي:
+
+\begin{codeblock}
+\documentclass[arabic={mapdigits}]{beamer-rl}
+
+% equivalent to
+% \babelprovide[import,main,mapdigits]{arabic}
+
+\end{codeblock}
+
+الفئة تعرف  بنفس الطريقة الخيارات (اللغات المدعومة من الحزمة 
+ \verb|babel|
+ وتكتب من اليمين إلى اليسار) 
+ 
+{\selectlanguage{nil} 
+\begin{multicols}{3}
+\verb|arabic|\\
+\verb|arabic-dz|\\
+\verb|arabic-tn|\\
+\verb|arabic-ma|\\
+\verb|arabic-eg|\\
+\verb|arabic-sa|\\
+\verb|arabic-iq|\\
+\verb|arabic-sy|\\
+\verb|arabic-lb|\\
+\verb|arabic-ps|\\
+\verb|arabic-jo|\\
+\verb|centralkurdish|\\
+\verb|hebrew|\\
+\verb|kashmiri|\\
+\verb|mazanderani|\\
+\verb|malayalam|\\
+\verb|northernkurdish-arab|\\
+\verb|pashto|\\
+\verb|persian|\\
+\verb|punjabi-arab|\\
+\verb|syriac|\\
+\verb|urdu|\\
+\verb|uyghur|\\
+\verb|uzbek-arab|\\
+\verb|yiddish|\\
+\end{multicols}
+}
 \end{frame}
 
 \section{بعض الملاحظات}
@@ -145,17 +201,20 @@
 \end{codeblock}
 
 \item
-يمكن اضافة كل الخيارات التي تتيحها الفئة \verb:beamer: عند استدعاء الفئة \verb:beamer-rl:
-
-كما يمكن تمرير خيارات اضافية للحزمة 
- \verb:babel: 
- عند استدعاء الفئة \verb:beamer-rl: على الشكل:
+الفئة تعرف  الخيار 
+\verb|layout| 
+الذي يمرر محتواه الى الحزمة 
+\verb|bebel| 
 
 \medskip 
  
 \begin{codeblock}
-\documentclass[babel={<babel options>}]{beamer-rl}
+\documentclass[layout={<babel layout>}]{beamer-rl}
 \end{codeblock}
+
+يمكن الاطلاع على المزيد حول الموضوع من دليل الحزمة 
+\verb|bebel| 
+\href{http://mirrors.ctan.org/macros/latex/required/babel/base/babel.pdf}{\beamergotobutton{الرابط}}
 
 \item
 الفئة 
@@ -180,17 +239,6 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 
 \bigskip
  
-\item
-
-الخيار 
-\verb:arabic:
-للفئة يمكن من استدعاء قاموس عربي لترجمة بعض المفردات مثل 
-\verb:example: ،\verb:definition: ،\verb:theorem: ....  
-
-\begin{codeblock}
-\documentclass[arabic]{beamer-rl}
-\end{codeblock}
-
 \item
 في بعض الحالات يمكن استعمال التعليمة 
  \cs{babelsublr} التي توفرها الحزمة  \verb:bebel: 
@@ -219,8 +267,7 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 \verb:beamer-rl:
 
 \begin{codeblock}
-\documentclass{beamer-rl}
-\babelprovide[import=ar-DZ, main]{arabic}
+\documentclass[arabic]{beamer-rl}
 \usetheme{Warsaw}
 \usepackage{pgfpages-rl} % adapt pgfpages to TRT pagedir
 \setbeamertemplate{note page}[]
@@ -288,7 +335,7 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 \item ثانيا 
 \end{enumerate}
 \end{column}
-\begin{column}{8.8cm}
+\begin{column}{9cm}
 \begin{codeblock}
 \setbeamertemplate{enumerate item}[ball]
 \begin{enumerate}
@@ -311,7 +358,7 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 \item ثانيا 
 \end{itemize}
 \end{column}
-\begin{column}{8.8cm}
+\begin{column}{9cm}
 \begin{codeblock}
 % in RTL context
 \setbeamertemplate{itemize item}[triangle]
@@ -327,7 +374,6 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 \framebreak
 
 \selectlanguage{nil}
-
 \begin{columns}[t]
 \begin{column}{2cm}
 \begin{itemize}
@@ -335,7 +381,7 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 \item Second 
 \end{itemize}
 \end{column}
-\begin{column}{8.8cm}
+\begin{column}{9cm}
 \begin{codeblock}
 % in LTR context 
 \setbeamertemplate{itemize item}[triangle]

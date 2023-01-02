@@ -1,9 +1,8 @@
-\documentclass[arabic,babel={layout=lists}]{beamer-rl}
-\usepackage{hologo} % pdflatex, xelatex, lualatex logos 
+\documentclass[arabic,english]{beamer-rl}
+\usepackage{hologo} % pdflatex, xelatex, lualatex logos
 \usepackage{verbatim}
-
-\babelprovide[import=ar-DZ, main]{arabic}
-\babelprovide[import,language=Default]{english}
+\usepackage{listings} 
+\usepackage{multicol}
 
 % Themes without Navigation Bars
 %\mode<presentation>{\usetheme{default}}
@@ -79,6 +78,8 @@
 
 \begin{document}
 
+\selectlanguage{english}
+
 \parskip=6pt
 
 \begin{frame}
@@ -95,7 +96,7 @@
 
 \begin{frame}[fragile]
 \frametitle{Introduction}
-Creating beamer presentation for  right to left languages  (like arabic) using \hologo{pdfLaTeX} or \hologo{XeLaTeX} still poses many problems due to bugs not currently resolved especially for colors and hyperlinks
+Creating beamer presentation for languages with script from right to left   (like arabic) using \hologo{pdfLaTeX} or \hologo{XeLaTeX} still poses many problems due to bugs not currently resolved especially for colors.
 
 The \hologo{LuaTeX} team set solutions for  these issues thanks to them and to \textit{Javier~Bezos} for  his works on the package \verb|babel| and \verb|bidi| writing    
 
@@ -106,7 +107,7 @@ This class provides patchs of some beamer templates and commands to create
 
 \section{How to use beamer-rl}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile,allowframebreaks]
 \frametitle{How to use beamer-rl}
 
 \begin{codeblock}
@@ -121,6 +122,60 @@ This class provides patchs of some beamer templates and commands to create
 ...
 \end{document}
 \end{codeblock}
+
+We get a similar result by adding the main language of the presentation (language with right-to-left script)
+  as option of class as follows:
+
+\begin{codeblock}
+\documentclass[arabic]{beamer-rl}
+
+\usetheme{CambridgeUS}
+
+\begin{document}
+...
+\end{document}
+\end{codeblock}
+
+We can also add more language options that the command \verb|\babelprovide|  provides as follows:
+
+\begin{codeblock}
+\documentclass[arabic={mapdigits}]{beamer-rl}
+
+% equivalent to
+% \babelprovide[import,main,mapdigits]{arabic}
+
+\end{codeblock}
+
+The class  define in the same way as  options (languages supported by the package \verb|babel| with script from right to left) 
+
+\begin{multicols}{3}
+\verb|arabic|\\
+\verb|arabic-dz|\\
+\verb|arabic-tn|\\
+\verb|arabic-ma|\\
+\verb|arabic-eg|\\
+\verb|arabic-sa|\\
+\verb|arabic-iq|\\
+\verb|arabic-sy|\\
+\verb|arabic-lb|\\
+\verb|arabic-ps|\\
+\verb|arabic-jo|\\
+\verb|centralkurdish|\\
+\verb|hebrew|\\
+\verb|kashmiri|\\
+\verb|mazanderani|\\
+\verb|malayalam|\\
+\verb|northernkurdish-arab|\\
+\verb|pashto|\\
+\verb|persian|\\
+\verb|punjabi-arab|\\
+\verb|syriac|\\
+\verb|urdu|\\
+\verb|uyghur|\\
+\verb|uzbek-arab|\\
+\verb|yiddish|\\
+\end{multicols}
+
 
 \end{frame}
 
@@ -140,16 +195,16 @@ modify this in the preambule  with
 \end{codeblock}
 
 \item
+The class defines  option \verb|layout| which passes its content to \verb|babel| 
 
-All options provided by \verb:beamer:  can be added  with  \verb:beamer-rl:
-
-Additional options can also be passed to  package 
- \verb:babel: 
- with  \verb:beamer-rl: like this
-
+\medskip 
+ 
 \begin{codeblock}
-\documentclass[babel={<babel options>}]{beamer-rl}
+\documentclass[layout={<babel layout>}]{beamer-rl}
 \end{codeblock}
+
+More on the subject can be found in the manual of  \verb|babel| package 
+\href{http://mirrors.ctan.org/macros/latex/required/babel/base/babel.pdf}{\beamergotobutton{link}}
 
 \item
 The \verb:beamer-rl: class swap the definition of \verb:\blacktriangleright: with  \verb:\blacktriangleleft: in RTL context
@@ -171,15 +226,6 @@ RTL context & \selectlanguage{nil}\blacktriangleright & \selectlanguage{nil}\bla
 }
 
 \bigskip
-
-\item
-
-Class option \verb:arabic: call an Arabic dictionary to translate strings like \verb:theorem:, \verb:example:, \verb:definition: ....  
-
-
-\begin{codeblock}
-\documentclass[arabic]{beamer-rl}
-\end{codeblock}
 
 \item
 In some cases you  need to use \verb:\babelsublr: command from \verb:bebel: 
@@ -263,6 +309,7 @@ It can also be used with other document classes besides \verb:beamer-rl:
 \begin{frame}[fragile,allowframebreaks]
 \frametitle{enumerate, itemize}
 
+\selectlanguage{arabic}
 \begin{columns}[t,onlytextwidth]
 
 \begin{column}{2cm}
@@ -336,7 +383,10 @@ It can also be used with other document classes besides \verb:beamer-rl:
 
 \begin{frame}[fragile]
 \frametitle{Hyperlinks}
-\begin{itemize}
+
+\selectlanguage{arabic}
+
+\begin{itemize}\shapemode2
 \item<1-> First.
 \item<2-> Second.
 \end{itemize}
@@ -361,6 +411,9 @@ It can also be used with other document classes besides \verb:beamer-rl:
 \frametitle{Theorems}
 
 \framesubtitle{The proof uses \textit{reductio ad absurdum}.}
+
+\selectlanguage{arabic}
+
 \begin{theorem}
 There is no largest prime number.
 \end{theorem}
@@ -378,8 +431,13 @@ number not in the first $p$ numbers.\qedhere
 
 \subsection{Zooming}
 
+\selectlanguage{arabic}
+
+\setbeamertemplate{frametitle}[default][right]
+
 \begin{frame}[fragile]
 \frametitle{Zooming}
+
 
 \framezoom<1><2>[border=2](1cm,1cm)(2cm,2cm)
 \pgfimage[height=4cm]{example-image}
