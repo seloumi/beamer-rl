@@ -78,13 +78,10 @@
 	\@ifstar{\@defbeamertemplate}{\@@defbeamertemplate}%
 }
 
-\let\old@blacktriangleright\blacktriangleright
-\let\old@blacktriangleleft\blacktriangleleft
+\def\reset@temp#1#2{\expandafter\let\csname beamer@@tmpop@#1@#2\endcsname\relax}
+\def\@@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate{#1}{#2}}
+\def\@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate*{#1}{#2}}
 
-\def\blacktriangleright{%
-	\ifcase\bbl@thepardir\old@blacktriangleright\else\old@blacktriangleleft\fi}
-\def\blacktriangleleft{%
-	\ifcase\bbl@thepardir\old@blacktriangleleft\else\old@blacktriangleright\fi}
 
 \let\oldpgfuseshading\pgfuseshading
 \def\pgfuseshading#1{\babelsublr{\oldpgfuseshading{#1}}}
@@ -172,10 +169,6 @@
       \fi
     } 
  
-\def\reset@temp#1#2{\expandafter\let\csname beamer@@tmpop@#1@#2\endcsname\relax}
-\def\@@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate{#1}{#2}}
-\def\@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate*{#1}{#2}}
-
 %% beamerbasenotes
 
 \defbeameroption{show notes on second screen}[right]%
@@ -191,7 +184,6 @@
   \beamer@twoscreensnotestrue
   \beamer@notestrue
 }
-
 
 %% beamerbasebox 
 
@@ -401,14 +393,26 @@
 
 %% beamerbaseauxtemplates
 
+\redefbeamertemplate{bibliography item}{triangle}
+{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\ifcase\bbl@thepardir\blacktriangleright\else\blacktriangleleft\fi$}}
 
 % (sub-)section in toc: subsections numbered
 
 \redefbeamertemplate{subsection in toc}{subsections numbered}
 {\leavevmode\leftskip=2em\rlap{\hskip-2em \babelsublr{\inserttocsectionnumber}.\babelsublr{\inserttocsubsectionnumber}}\inserttocsubsection\par}
 
-
 %% beamerinnerthemedefault
+
+\redefbeamertemplate*{itemize item}{default}{\usebeamerfont*{itemize item}\raise1.25pt\hbox{\donotcoloroutermaths$\ifcase\bbl@thepardir\blacktriangleright\else\blacktriangleleft\fi$}}
+
+\redefbeamertemplate*{itemize subitem}{default}{\usebeamerfont*{itemize subitem}\raise1.5pt\hbox{\donotcoloroutermaths$
+\ifcase\bbl@thepardir\blacktriangleright\else\blacktriangleleft\fi$}}
+
+\AtBeginDocument{\@ifpackageloaded{beamerthemeBoadilla}{%
+\usesubitemizeitemtemplate{%
+\tiny\raise1.5pt\hbox{\color{beamerstructure}$\ifcase\bbl@thepardir\blacktriangleright\else\blacktriangleleft\fi$}%
+}
+}{}}
 
 \redefbeamertemplate*{button}{default}
 {%
