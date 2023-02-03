@@ -1,6 +1,6 @@
-\NeedsTeXFormat{LaTeX2e}
+\NeedsTeXFormat{LaTeX2e}[2022-11-01]
 \ProvidesClass{beamer-rl}
-[2023/01/02 v1.7  LaTeX class to patch beamer for right to left presentation with babel]
+[2023/02/03 v1.8  LaTeX class to patch beamer for right to left presentation with babel]
 
 \DeclareKeys
   {
