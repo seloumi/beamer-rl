@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[2022-11-01]
 \ProvidesClass{beamer-rl}
-[2023/12/24 v1.9  LaTeX class to patch beamer for right to left presentation with babel]
+[2025/10/15 v2  LaTeX class to patch beamer for right to left presentation with babel]
 
 \DeclareKeys
   {
@@ -152,6 +152,7 @@
         \AddToHook{env/tikzpicture/begin}{\bbl@pictsetdir\tw@}%
         \bbl@add\tikz@atbegin@node{\bbl@pictresetdir}%
         \bbl@sreplace\tikz{\begingroup}{\begingroup\bbl@pictsetdir\tw@}%
+        \bbl@sreplace\tikzpicture{\begingroup}{\begingroup\bbl@pictsetdir\tw@}%
       \fi
       \ifx\tcolorbox\@undefined\else
         \def\tcb@drawing@env@begin{%
