@@ -515,12 +515,6 @@
 \bbl@sreplace\beamer@shrinkframebox{\vbox}%
           {\vbox dir TLT}%
 
-% issue of \shapemode bug 
-% https://github.com/latex3/babel/issues/13
-% we need to insert \shapemode=2  or \shapemode=0 manualy  at beginning of list
-% \begin{enumerate} \shapemode=.. &  \begin{itemize} \shapemode=..
-
-
 % Use Amiri as default sans serif font
 
 \font\sffont@rl="Amiri" at 10pt
