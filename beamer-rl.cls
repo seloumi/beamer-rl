@@ -517,7 +517,10 @@
 
 % Use Amiri as default sans serif font
 
+\edef\@tmpa{\the\suppressfontnotfounderror}
+\suppressfontnotfounderror=1
 \font\sffont@rl="Amiri" at 10pt
+\suppressfontnotfounderror=\@tmpa
 \ifx\sffont@rl\nullfont
 \else
 \babelfont{sf}{Amiri}
