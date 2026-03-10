@@ -4,7 +4,8 @@
 
 \DeclareKeys
   {
-     layout  .code:n = \PassOptionsToPackage{layout=#1}{babel}
+     layout  .code:n = {\def\beamerrl@layout{graphics.#1}}
+    ,layout  .initial:n = {}
     ,unknown .code:n = \PassOptionsToClass{\CurrentOption}{beamer}
   }
 
@@ -57,6 +58,7 @@
 \ExplSyntaxOff
 
 \ProcessKeyOptions
+\PassOptionsToPackage{layout=\beamerrl@layout}{babel}
 
 \RequirePackage{ifluatex}
 
@@ -82,90 +84,6 @@
 
 \let\oldpgfuseshading\pgfuseshading
 \def\pgfuseshading#1{\babelsublr{\oldpgfuseshading{#1}}}
-
-% add graphics layout by default
-
-\let\bbl@pictresetdir\relax
-   \def\bbl@pictsetdir#1{%
-     \ifcase\bbl@thetextdir
-       \let\bbl@pictresetdir\relax
-     \else
-       \ifcase#1\bodydir TLT  % Remember this sets the inner boxes
-         \or\textdir TLT
-         \else\bodydir TLT \textdir TLT
-       \fi
-       % \(text|par)dir required in pgf:
-       \def\bbl@pictresetdir{\bodydir TRT\pardir TRT\textdir TRT\relax}%
-     \fi}%
-   \AddToHook{env/picture/begin}{\bbl@pictsetdir\tw@}%
-   \directlua{
-     Babel.get_picture_dir = true
-     Babel.picture_has_bidi = 0
-     %
-     function Babel.picture_dir (head)
-       if not Babel.get_picture_dir then return head end
-       if Babel.hlist_has_bidi(head) then 
-         Babel.picture_has_bidi = 1
-       end
-       return head
-     end
-     luatexbase.add_to_callback("hpack_filter", Babel.picture_dir,
-       "Babel.picture_dir")
-   }%
-   \AtBeginDocument{%
-     \def\LS@rot{%
-       \setbox\@outputbox\vbox{%
-         \hbox dir TLT{\rotatebox{90}{\box\@outputbox}}}}%
-     \long\def\put(#1,#2)#3{%
-       \@killglue 
-       % Try:
-       \ifx\bbl@pictresetdir\relax
-         \def\bbl@tempc{0}%
-       \else
-         \directlua{
-           Babel.get_picture_dir = true
-           Babel.picture_has_bidi = 0
-         }%
-         \setbox\z@\hb@xt@\z@{%
-           \@defaultunitsset\@tempdimc{#1}\unitlength
-           \kern\@tempdimc
-           #3\hss}% TODO: #3 executed twice (below). That’s bad.
-         \edef\bbl@tempc{\directlua{tex.print(Babel.picture_has_bidi)}}%
-       \fi
-       % Do:
-       \@defaultunitsset\@tempdimc{#2}\unitlength
-       \raise\@tempdimc\hb@xt@\z@{%
-         \@defaultunitsset\@tempdimc{#1}\unitlength
-         \kern\@tempdimc
-         {\ifnum\bbl@tempc>\z@\bbl@pictresetdir\fi#3}\hss}% 
-       \ignorespaces}%
-     \MakeRobust\put}%
-   \AtBeginDocument
-     {\AddToHook{cmd/diagbox@pict/before}{\let\bbl@pictsetdir\@gobble}%
-       \AddToHook{env/pgfpicture/begin}{\bbl@pictsetdir\@ne}%
-        \bbl@add\pgfinterruptpicture{\bbl@pictresetdir}%
-        \bbl@add\pgfsys@beginpicture{\bbl@pictsetdir\@ne}%
-      \ifx\tikzpicture\@undefined\else    
-        \AddToHook{env/tikzpicture/begin}{\bbl@pictsetdir\tw@}%
-        \bbl@add\tikz@atbegin@node{\bbl@pictresetdir}%
-        \bbl@sreplace\tikz{\begingroup}{\begingroup\bbl@pictsetdir\tw@}%
-        \bbl@sreplace\tikzpicture{\begingroup}{\begingroup\bbl@pictsetdir\tw@}%
-      \fi
-      \ifx\tcolorbox\@undefined\else
-        \def\tcb@drawing@env@begin{%
-        \csname tcb@before@\tcb@split@state\endcsname
-        \bbl@pictsetdir\tw@
-        \begin{\kvtcb@graphenv}%
-        \tcb@bbdraw%
-        \tcb@apply@graph@patches
-        }%
-       \def\tcb@drawing@env@end{%
-       \end{\kvtcb@graphenv}%
-       \bbl@pictresetdir
-       \csname tcb@after@\tcb@split@state\endcsname
-       }%
-      \fi
-    } 
  
 %% beamerbasenotes
 
