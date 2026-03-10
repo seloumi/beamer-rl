@@ -69,9 +69,6 @@
 
 \RequirePackage[nil,bidi=basic]{babel}
 
-\let\oldpgfpicture\pgfpicture
-\let\endoldpgfpicture\endpgfpicture
-
 \let\oldpgfsys@beginpicture\pgfsys@beginpicture
 
 \def\redefbeamertemplate{%
