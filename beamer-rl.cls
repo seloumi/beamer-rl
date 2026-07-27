@@ -82,8 +82,6 @@
 \def\@defbeamertemplate#1#2{\reset@temp{#1}{#2}\defbeamertemplate*{#1}{#2}}
 
 
-\let\oldpgfuseshading\pgfuseshading
-\def\pgfuseshading#1{\babelsublr{\oldpgfuseshading{#1}}}
  
 %% beamerbasenotes
 
